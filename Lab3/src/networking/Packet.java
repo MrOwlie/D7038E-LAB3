@@ -30,12 +30,16 @@ public class Packet {
     @Serializable
     abstract public static class testPacket extends MyAbstractMessage {
         
-        String message;
+        protected String message;
         
         public testPacket(int senderID, String message) {
             super(senderID);
             this.message = message;
 
+        }
+        
+        public String getMessage(){
+            return message;
         }
     }
     
