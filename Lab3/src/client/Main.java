@@ -3,9 +3,12 @@ package client;
 import com.jme3.app.SimpleApplication;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
+import com.jme3.network.Client;
+import com.jme3.network.Network;
 import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
+import networking.Packet;
 
 /**
  * This is the Main Class of your Game. You should only do initialization here.
@@ -13,6 +16,7 @@ import com.jme3.scene.shape.Box;
  * @author normenhansen
  */
 public class Main extends SimpleApplication {
+    Client myClient;
 
     public static void main(String[] args) {
         Main app = new Main();
@@ -30,6 +34,13 @@ public class Main extends SimpleApplication {
         geom.setMaterial(mat);
 
         rootNode.attachChild(geom);
+        try{
+            myClient = Network.connectToServer("localhost", 6143);
+            myClient.addMessageListener(new NetRead(), Packet.testPacket);
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override
