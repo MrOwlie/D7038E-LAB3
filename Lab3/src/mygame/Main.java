@@ -18,6 +18,7 @@ public class Main extends SimpleApplication {
         Main app = new Main();
         app.start();
     }
+    //test
 
     @Override
     public void simpleInitApp() {
