@@ -36,7 +36,7 @@ public class Main extends SimpleApplication {
         rootNode.attachChild(geom);
         try{
             myClient = Network.connectToServer("localhost", 6143);
-            myClient.addMessageListener(new NetRead(), Packet.testPacket);
+            myClient.addMessageListener(new NetRead());
         }
         catch(Exception e){
             System.out.println(e.getMessage());

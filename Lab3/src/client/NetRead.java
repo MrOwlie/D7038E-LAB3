@@ -23,8 +23,8 @@ public class NetRead implements Runnable, MessageListener<Client> {
 
     @Override
     public void messageReceived(Client source, Message m) {
-        if(m instanceof Packet.testPacket){
-           Packet.testPacket packet = (Packet.testPacket)m;
+        if(m instanceof Packet.TestPacket){
+           Packet.TestPacket packet = (Packet.TestPacket)m;
            System.out.println(packet.getMessage());
         }
     }
