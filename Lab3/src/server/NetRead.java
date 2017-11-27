@@ -35,11 +35,14 @@ public class NetRead implements Runnable, MessageListener<HostedConnection> {
     
     private void update() {
         while(!this.exit) {
-            Message message = NetRead.messageQueue.remove();
-            MyAbstractMessage m = (MyAbstractMessage) message;
-            if(m instanceof TestPacket) {
-                TestPacket p = (TestPacket) m;
-                System.out.println(p.getMessage());
+            if(!messageQueue.isEmpty()){
+                Message message = NetRead.messageQueue.remove();
+                MyAbstractMessage m = (MyAbstractMessage) message;
+                if(m instanceof TestPacket) {
+                    TestPacket p = (TestPacket) m;
+                    System.out.println(p.getMessage());
+                }
+                
             }
         }
     }

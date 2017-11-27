@@ -31,15 +31,19 @@ public class GameServer {
     
     
     public GameServer(String gameName, int version, int port) {
+        //Register packets
+        Serializer.registerClass(networking.Packet.TestPacket.class);
+        
+
         //Start the server
         try {
             this.server = Network.createServer(gameName, version, port, port);
+            this.server.start();
         } catch (IOException ex) {
+            System.out.println("THLSEKOA");
             Logger.getLogger(GameServer.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        //Register packets
-        Serializer.registerClass(networking.Packet.TestPacket.class);
         
         //Start networking threads
         this.startThreads();

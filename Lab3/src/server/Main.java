@@ -29,17 +29,18 @@ public class Main extends SimpleApplication{
     public static void main(String[] args){
         Main app = new Main();
         app.start(JmeContext.Type.Headless);
-        Main.server.netWrite.addMessage(new TestPacket("yolo"));
+        
 
     }
 
     @Override
     public void simpleInitApp() {
-    
+        
     }
     
     @Override
     public void destroy() {
+        System.out.println("DESRYTRY");
         server.server.close();
         super.destroy();
     }

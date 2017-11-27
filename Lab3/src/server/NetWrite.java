@@ -8,6 +8,7 @@ package server;
 import com.jme3.network.Filter;
 import com.jme3.network.Message;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import networking.Packet;
 import networking.Packet.MyAbstractMessage;
 import server.MessageFilterPair;
 
@@ -25,6 +26,7 @@ public class NetWrite implements Runnable {
     
     public NetWrite(GameServer server) {
         messageQueue = new ConcurrentLinkedQueue();
+        this.addMessage(new Packet.TestPacket("yolo"));
         this.server = server;
     }
     
