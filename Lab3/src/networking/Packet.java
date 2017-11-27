@@ -22,6 +22,9 @@ public class Packet {
             this.senderID = senderID;
         }
         
+        public int getSenderID(){
+            return senderID;
+        }
     }
   
     @Serializable
