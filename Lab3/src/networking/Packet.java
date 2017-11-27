@@ -16,14 +16,8 @@ public class Packet {
     
     
     abstract public static class MyAbstractMessage extends AbstractMessage {
-        protected int senderID;
         
-        public MyAbstractMessage(int senderID) {
-            this.senderID = senderID;
-        }
-        
-        public int getSenderID(){
-            return senderID;
+        public MyAbstractMessage() {
         }
     }
   
@@ -32,10 +26,12 @@ public class Packet {
         
         protected String message;
         
-        public TestPacket(int senderID, String message) {
-            super(senderID);
+        public TestPacket(){
+            
+        }
+        
+        public TestPacket(String message) {
             this.message = message;
-
         }
         
         public String getMessage(){
