@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mygame;
+package client;
 
 /**
  *
  * @author mrowlie
  */
-public class NetWrite implements Runnable {
+public class Display implements Runnable {
 
     @Override
     public void run() {
