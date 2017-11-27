@@ -5,6 +5,8 @@
  */
 package client;
 
+import com.jme3.network.Message;
+
 /**
  *
  * @author mrowlie

@@ -28,11 +28,11 @@ public class Packet {
     }
   
     @Serializable
-    abstract public static class testPacket extends MyAbstractMessage {
+    public static class TestPacket extends MyAbstractMessage {
         
         protected String message;
         
-        public testPacket(int senderID, String message) {
+        public TestPacket(int senderID, String message) {
             super(senderID);
             this.message = message;
 

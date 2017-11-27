@@ -8,7 +8,7 @@ import com.jme3.network.Network;
 import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
-import networking.Packet;
+import networking.Packet.TestPacket;
 
 /**
  * This is the Main Class of your Game. You should only do initialization here.
@@ -37,6 +37,7 @@ public class Main extends SimpleApplication {
         try{
             myClient = Network.connectToServer("localhost", 6143);
             myClient.addMessageListener(new NetRead());
+            myClient.send(new TestPacket(1,"Hej"));
         }
         catch(Exception e){
             System.out.println(e.getMessage());
