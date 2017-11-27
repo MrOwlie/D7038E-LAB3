@@ -37,7 +37,7 @@ public class Main extends SimpleApplication {
         try{
             myClient = Network.connectToServer("localhost", 6143);
             myClient.addMessageListener(new NetRead());
-            myClient.send(new TestPacket(1,"Hej"));
+            myClient.send(new TestPacket("Hej"));
         }
         catch(Exception e){
             System.out.println(e.getMessage());

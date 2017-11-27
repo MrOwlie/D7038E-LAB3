@@ -29,7 +29,7 @@ public class Main extends SimpleApplication{
     public static void main(String[] args){
         Main app = new Main();
         app.start(JmeContext.Type.Headless);
-        Main.server.netWrite.addMessage(new TestPacket(1, "yolo"));
+        Main.server.netWrite.addMessage(new TestPacket("yolo"));
 
     }
 
