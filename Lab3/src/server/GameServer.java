@@ -5,7 +5,8 @@
  */
 package server;
 
-
+import com.jme3.network.Filter;
+import com.jme3.network.Message;
 import com.jme3.network.Network;
 import com.jme3.network.Server;
 import com.jme3.network.serializing.Serializer;
@@ -22,6 +23,13 @@ public class GameServer {
     
     protected Server server;
     
+    protected Thread netReadThread;
+    protected Thread netWriteThread;
+    
+    protected NetRead netRead;
+    protected NetWrite netWrite;
+    
+    
     public GameServer(String gameName, int version, int port) {
         //Start the server
         try {
@@ -33,7 +41,19 @@ public class GameServer {
         //Register packets
         Serializer.registerClass(networking.Packet.TestPacket.class);
         
+        //Start networking threads
+        this.startThreads();
+        
     }
+    
+    public void startThreads() {
+        
+        this.netReadThread = new Thread(netRead = new NetRead(this));
+        this.netReadThread.start();
+        
+    }
+    
+    
     
     
     

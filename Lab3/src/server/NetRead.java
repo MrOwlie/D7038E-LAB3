@@ -25,6 +25,7 @@ public class NetRead implements Runnable, MessageListener<HostedConnection> {
     static ConcurrentLinkedQueue<Message> messageQueue;
     
     public NetRead(GameServer server) {
+        messageQueue = new ConcurrentLinkedQueue();
         this.server = server;
     }
     
