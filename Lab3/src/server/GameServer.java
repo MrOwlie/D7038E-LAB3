@@ -54,6 +54,8 @@ public class GameServer {
         
         this.netReadThread = new Thread(netRead = new NetRead(this));
         this.netReadThread.start();
+        this.netWriteThread = new Thread(netWrite = new NetWrite(this));
+        this.netWriteThread.start();
         
     }
     

@@ -26,7 +26,6 @@ public class NetWrite implements Runnable {
     
     public NetWrite(GameServer server) {
         messageQueue = new ConcurrentLinkedQueue();
-        this.addMessage(new Packet.TestPacket("yolo"));
         this.server = server;
     }
     
