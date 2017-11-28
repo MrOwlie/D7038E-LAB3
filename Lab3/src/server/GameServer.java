@@ -45,8 +45,6 @@ public class GameServer {
         }
         
         
-        //Start networking threads
-        this.startThreads();
         
     }
     

@@ -5,12 +5,17 @@
  */
 package server;
 
+import com.jme3.network.Filter;
+import com.jme3.network.Filters;
 import com.jme3.network.HostedConnection;
 import com.jme3.network.Message;
 import com.jme3.network.MessageListener;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import networking.Packet;
 import networking.Packet.MyAbstractMessage;
 import networking.Packet.TestPacket;
+import networking.Packet.TimeDiff;
+import networking.Packet.TimeSync;
 
 /**
  *
@@ -22,7 +27,7 @@ public class NetRead implements Runnable, MessageListener<HostedConnection> {
     
     boolean exit = false;
     
-    static ConcurrentLinkedQueue<Message> messageQueue;
+    static ConcurrentLinkedQueue<MessageConnectionPair> messageQueue;
     
     public NetRead(GameServer server) {
         messageQueue = new ConcurrentLinkedQueue();
@@ -36,11 +41,16 @@ public class NetRead implements Runnable, MessageListener<HostedConnection> {
     private void update() {
         while(!this.exit) {
             if(!messageQueue.isEmpty()){
-                Message message = NetRead.messageQueue.remove();
-                MyAbstractMessage m = (MyAbstractMessage) message;
+                MessageConnectionPair pair = NetRead.messageQueue.remove();
+                MyAbstractMessage m = (MyAbstractMessage) pair.m;
                 if(m instanceof TestPacket) {
                     TestPacket p = (TestPacket) m;
                     System.out.println(p.getMessage());
+                }
+                if(m instanceof TimeSync) {
+                    TimeSync p = (TimeSync) m;
+                    float diff = (Main.timeElapsed - p.getTime()) / 2;
+                    this.server.server.broadcast(Filters.in(pair.c), new TimeDiff(diff));
                 }
                 
             }
@@ -60,7 +70,7 @@ public class NetRead implements Runnable, MessageListener<HostedConnection> {
     
     @Override
     public void messageReceived(HostedConnection source, Message m) {
-        NetRead.messageQueue.add(m);
+        NetRead.messageQueue.add(new MessageConnectionPair(m, source));
     }
     
 }

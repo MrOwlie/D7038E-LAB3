@@ -22,7 +22,7 @@ public class NetRead implements Runnable, MessageListener<Client> {
     ConcurrentLinkedQueue<Message> messageQueue;
     
     public NetRead(){
-        messageQueue = new ConcurrentLinkedQueue<Message>();
+        messageQueue = new ConcurrentLinkedQueue<>();
     }
     
     @Override

@@ -9,7 +9,11 @@ import com.jme3.network.Filter;
 import com.jme3.network.Message;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import networking.Packet;
+import networking.Packet.DiskUpdate;
 import networking.Packet.MyAbstractMessage;
+import networking.Packet.ScoreUpdate;
+import networking.Packet.TimeDiff;
+import networking.Packet.TimeSync;
 import server.MessageFilterPair;
 
 /**
@@ -27,6 +31,22 @@ public class NetWrite implements Runnable {
     public NetWrite(GameServer server) {
         messageQueue = new ConcurrentLinkedQueue();
         this.server = server;
+    }
+    
+    public void updateDisk(int pid, float x, float y, float vx, float vy){
+        messageQueue.add(new MessageFilterPair(null, new DiskUpdate(pid, x, y, vx, vy)));
+    }
+    
+    public void updateScore(int pid, int newScore) {
+        messageQueue.add(new MessageFilterPair(null, new ScoreUpdate(pid, newScore)));
+    }
+    
+    public void syncTime(){
+        messageQueue.add(new MessageFilterPair(null, new TimeSync(Main.timeElapsed)));
+    }
+    
+    public void sendTimeDiff(Filter filter, float timeDiff) {
+        messageQueue.add(new MessageFilterPair(filter, new TimeDiff(timeDiff)));
     }
     
     public void addMessage(MyAbstractMessage message, Filter filter) {

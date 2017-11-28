@@ -20,8 +20,6 @@ public class Main extends SimpleApplication{
     public static final String DEFAULT_SERVER = "localhost";
     public static final int PORT = 6143;
     public static final int VERSION = 1;
-    float timeElapsed = 0;
-    public static final float time = 10f;
     
     //Game constants
     static final float START_TIME = 30f;
@@ -47,15 +45,15 @@ public class Main extends SimpleApplication{
     
     public static ArrayList<PlayerDisk> players = new ArrayList();
     
-    private static GameServer server;
+    public static GameServer server;
 
     private static Thread modelingThread;
     private static Modeling modeling;
     
+    static float timeElapsed = 0;
+    
     public Main() {
-        
-        
-        
+         
     }
     
     public static void main(String[] args){
@@ -67,17 +65,14 @@ public class Main extends SimpleApplication{
     @Override
     public void simpleInitApp() {
         Main.server = new GameServer(NAME, VERSION, PORT);
+        Main.server.startThreads();
         Main.modelingThread = new Thread(modeling = new Modeling());
         Main.modelingThread.start();
     }
     
     @Override
     public void simpleUpdate(float tpf) {
-        timeElapsed += tpf;
-        if(timeElapsed > time){
-            Main.server.netWrite.addMessage(new TestPacket("Hej client"));
-            timeElapsed = 0f;
-        }
+        Main.timeElapsed += tpf;
     }
     
     @Override

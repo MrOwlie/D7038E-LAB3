@@ -36,12 +36,16 @@ public abstract class Disk {
     private Vector2f v;
     private final float friction = 0.2f;
     
+    public int diskID;
+    private static int diskAmount = 0;
+    
     @SuppressWarnings("LeakingThisInConstructor")
     public Disk(float radius) {
             this.radius = radius;
             this.pos = new Vector2f();
             this.v = new Vector2f(0, 0);
             this.mass = FastMath.PI * FastMath.sqr(radius);
+            this.diskID = Disk.diskAmount++;
             
             Disk.disks.add(this);
         
@@ -85,21 +89,25 @@ public abstract class Disk {
         if(pos.y + radius + v.y * tpf > Main.FREE_AREA_WIDTH / 2){
             v.set(v.x, -v.y);
             this.pos.y = Main.FREE_AREA_WIDTH / 2 - (this.radius * 1.1f);
+            Main.server.netWrite.updateDisk(this.diskID, this.pos.x, this.pos.y, this.v.x, this.v.y);
         }
         //south
         if(pos.y - radius + v.y * tpf < -Main.FREE_AREA_WIDTH / 2){
             v.set(v.x, -v.y);
             this.pos.y = - Main.FREE_AREA_WIDTH / 2 + (this.radius * 1.1f);
+            Main.server.netWrite.updateDisk(this.diskID, this.pos.x, this.pos.y, this.v.x, this.v.y);
         }
         //east
         if(pos.x + radius + v.x * tpf > Main.FREE_AREA_WIDTH / 2){
             v.set(-v.x, v.y);
             this.pos.x = Main.FREE_AREA_WIDTH / 2 - (this.radius * 1.1f);
+            Main.server.netWrite.updateDisk(this.diskID, this.pos.x, this.pos.y, this.v.x, this.v.y);
         }
         //west
         if(pos.x - radius + v.x * tpf < -Main.FREE_AREA_WIDTH / 2){
             v.set(-v.x, v.y);
             this.pos.x = - Main.FREE_AREA_WIDTH / 2 + (this.radius * 1.1f);
+            Main.server.netWrite.updateDisk(this.diskID, this.pos.x, this.pos.y, this.v.x, this.v.y);
         }
         
         //Disk collisions
@@ -152,8 +160,6 @@ public abstract class Disk {
     
     static void diskCollision(float tpf, Disk disk1, Disk disk2) {
         
-        
-        
         Vector2f relativePos = disk1.pos.subtract(disk2.pos);
         Vector2f relativeSpeed = disk1.v.subtract(disk2.v);
         float collisionTime = (FastMath.sqrt(relativePos.x*relativePos.x + relativePos.y*relativePos.y) - 
@@ -186,11 +192,10 @@ public abstract class Disk {
         disk2.v.x = (float) (cosAngle * finalSpeedX2 - sinAngle * finalSpeedY2);
         disk2.v.y = (float) (sinAngle * finalSpeedX2 + cosAngle * finalSpeedY2);
 
-        
-        
-        
+        Main.server.netWrite.updateDisk(disk1.diskID, disk1.pos.x, disk1.pos.y, disk1.v.x, disk1.v.y);
+        Main.server.netWrite.updateDisk(disk2.diskID, disk2.pos.x, disk2.pos.y, disk2.v.x, disk2.v.y);
 
-
+        
     }
     
     
