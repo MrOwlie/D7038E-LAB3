@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package server;
+package client;
 
+import com.jme3.asset.AssetManager;
+import com.jme3.math.ColorRGBA;
 import java.util.Random;
 
 /**
@@ -14,10 +16,11 @@ import java.util.Random;
 public class NegativeDisk extends Disk{
     
     
-    public NegativeDisk(float x, float y) {
-        super(Main.NEGDISK_R);
+    public NegativeDisk(AssetManager assetManager, float x, float y) {
+        super(assetManager, ColorRGBA.Red, Main.NEGDISK_R);
         this.pos.x = x;
         this.pos.y = y;
+        this.diskNode.setLocalTranslation(x, y, 0f);
        
     }
     

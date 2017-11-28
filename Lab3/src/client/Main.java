@@ -19,6 +19,24 @@ public class Main extends SimpleApplication {
     public static final int PORT = 6143;
     public static final int VERSION = 1;
     
+    //Game constants
+    static final float START_TIME = 30f;
+    
+    //Frame constants
+    static final float FRAME_THICKNESS = 24f;
+    static final float FREE_AREA_WIDTH = 492f;
+    static final float FRAME_SIZE = FREE_AREA_WIDTH + 2f * FRAME_THICKNESS;
+    
+    //Location constants
+    static final float PLAYER_COORD = FREE_AREA_WIDTH / 6;
+    static final float POSNEG_MAX_COORD = FREE_AREA_WIDTH / 3;
+    static final float POSNEG_BETWEEN_COORD = PLAYER_COORD;
+    
+    //Disk radius constants
+    static final float PLAYER_R = 20f;
+    static final float POSDISK_R = 16f;
+    static final float NEGDISK_R = 16f;
+    
     Client myClient;
     Modeling model;
     

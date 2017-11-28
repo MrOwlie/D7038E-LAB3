@@ -18,10 +18,15 @@ import com.jme3.renderer.queue.RenderQueue;
 public class PlayerDisk extends Disk{
     
     
-    int score;
+    public int score;
+    
+    public int pid;
+    
+    public static int playerAmount = 0;
     
     public PlayerDisk(int id) {
         super(Main.PLAYER_R);
+        this.pid = PlayerDisk.playerAmount++;
         score = 0;
         
     }

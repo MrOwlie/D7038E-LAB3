@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package server;
+package client;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
@@ -24,6 +24,11 @@ public abstract class Disk {
     
     public static ArrayList<Disk> disks = new ArrayList<Disk>();
     
+    public Node diskNode;
+    public Cylinder disk;
+    public Geometry diskGeom;
+    public Material diskMat;
+    
     public boolean justCollided;
     public boolean hasCollided;
     
@@ -37,11 +42,27 @@ public abstract class Disk {
     private final float friction = 0.2f;
     
     @SuppressWarnings("LeakingThisInConstructor")
-    public Disk(float radius) {
+    public Disk(AssetManager assetManager, ColorRGBA color, float radius) {
+        
+            
             this.radius = radius;
+        
             this.pos = new Vector2f();
+            
+            diskNode = new Node();
+            
+            disk = new Cylinder(30, 30, this.radius, Main.FRAME_THICKNESS, true);
+            diskGeom = new Geometry("Disk", disk);
+            diskMat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+            diskMat.setColor("Color", color);
+            diskGeom.setMaterial(diskMat);
+            
+            this.diskNode.attachChild(diskGeom);
+            
             this.v = new Vector2f(0, 0);
+            
             this.mass = FastMath.PI * FastMath.sqr(radius);
+            
             
             Disk.disks.add(this);
         
@@ -55,10 +76,11 @@ public abstract class Disk {
         pos.x = pos.x + v.x * tpf;
         pos.y = pos.y + v.y * tpf;
         
+        this.diskNode.setLocalTranslation(pos.x, pos.y, 0);
         
         v.set(v.x * (1 / (1 + friction * tpf)), v.y * (1 / (1 + friction * tpf)));
         
-        resolveCollision(tpf);
+        //resolveCollision(tpf);
         
         
     }
@@ -73,10 +95,12 @@ public abstract class Disk {
     
     public void setPosition(float x, float y) {
         this.pos.set(x, y);
+        this.diskNode.setLocalTranslation(x, y, 0);
     }
     
     public void setPosition(Vector2f pos){
         this.pos = pos;
+        this.diskNode.setLocalTranslation(pos.getX(), pos.getY(), 0);
     }
     
     public void resolveCollision(float tpf){
@@ -85,21 +109,25 @@ public abstract class Disk {
         if(pos.y + radius + v.y * tpf > Main.FREE_AREA_WIDTH / 2){
             v.set(v.x, -v.y);
             this.pos.y = Main.FREE_AREA_WIDTH / 2 - (this.radius * 1.1f);
+            this.diskNode.setLocalTranslation(this.pos.x, this.pos.y, 0f);
         }
         //south
-        if(pos.y - radius + v.y * tpf < -Main.FREE_AREA_WIDTH / 2){
+        if(pos.y - radius + v.y * tpf <  Main.FREE_AREA_WIDTH / 2){
             v.set(v.x, -v.y);
             this.pos.y = - Main.FREE_AREA_WIDTH / 2 + (this.radius * 1.1f);
+            this.diskNode.setLocalTranslation(this.pos.x, this.pos.y, 0f);
         }
         //east
         if(pos.x + radius + v.x * tpf > Main.FREE_AREA_WIDTH / 2){
             v.set(-v.x, v.y);
             this.pos.x = Main.FREE_AREA_WIDTH / 2 - (this.radius * 1.1f);
+            this.diskNode.setLocalTranslation(this.pos.x, this.pos.y, 0f);
         }
         //west
-        if(pos.x - radius + v.x * tpf < -Main.FREE_AREA_WIDTH / 2){
+        if(pos.x - radius + v.x * tpf <  Main.FREE_AREA_WIDTH / 2){
             v.set(-v.x, v.y);
             this.pos.x = - Main.FREE_AREA_WIDTH / 2 + (this.radius * 1.1f);
+            this.diskNode.setLocalTranslation(this.pos.x, this.pos.y, 0f);
         }
         
         //Disk collisions
