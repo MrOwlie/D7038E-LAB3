@@ -38,6 +38,79 @@ public class Packet {
             return message;
         }
     }
+    @Serializable
+    public static class DiskUpdate extends MyAbstractMessage {
+        protected int diskID;
+        protected float x; //horizontal position
+        protected float y; //vertical position
+        protected float vx; //horizontal velocity
+        protected float vy; //vertical velocity
+        
+        public DiskUpdate(){
+            
+        }
+        
+        public DiskUpdate(int diskID, float x, float y, float vx, float vy) {
+            this.diskID = diskID;
+            this.x = x;
+            this.y = y;
+            this.vx = vx;
+            this.vy = vy;
+        }
+        
+    }
+    @Serializable
+    public static class ScoreUpdate extends MyAbstractMessage {
+        protected int pid;
+        protected int newScore;
+        
+        public ScoreUpdate(){
+            
+        }
+        
+        public ScoreUpdate(int pid, int newScore) {
+            this.pid = pid;
+            this.newScore = newScore;
+        }
+    }
+    @Serializable
+    public static class TimeSync extends MyAbstractMessage {
+        protected float time;
+        
+        public TimeSync() {
+            
+        }
+        
+        public TimeSync(float time) {
+            this.time = time;
+        }
+        
+        public float getTime(){
+            return this.time;
+        }
+        
+    }
+    @Serializable
+    public static class TimeDiff extends MyAbstractMessage {
+        protected float diff;
+        
+        public TimeDiff() {
+            
+        }
+        
+        public TimeDiff(float diff) {
+            this.diff = diff;
+        }
+        
+        public float getDiff() {
+            return this.diff;
+        }
+        
+    }
+    @Serializable
+    public static class startGame extends MyAbstractMessage {
+        public startGame() {}
+    }
     
 }
 
