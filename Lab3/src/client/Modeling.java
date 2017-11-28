@@ -47,7 +47,7 @@ public class Modeling implements Runnable {
                 frameTimeLock.unlock();
             }
             if(timeElpasedThisFrame != 0f){
-                for(Disk d : server.Disk.disks){
+                for(Disk d : Disk.disks){
                     d.tick(timeElpasedThisFrame);
                 }
             }
@@ -69,6 +69,17 @@ public class Modeling implements Runnable {
         gameTimeLock.lock();
         try{
             gameTimeElpased += tpf;
+        }
+        
+        finally{
+            gameTimeLock.unlock();
+        }
+    }
+    
+    private void setGameTime(float gameTime){
+        gameTimeLock.lock();
+        try{
+            gameTimeElpased = gameTime;
         }
         
         finally{

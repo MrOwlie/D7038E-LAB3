@@ -37,8 +37,8 @@ public class Main extends SimpleApplication {
     static final float POSDISK_R = 16f;
     static final float NEGDISK_R = 16f;
     
-    Client myClient;
-    Modeling model;
+    static Client myClient;
+    static Modeling model;
     
     Thread netReadThread;
     Thread netWriteThread;

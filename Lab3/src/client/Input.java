@@ -5,15 +5,35 @@
  */
 package client;
 
+import com.jme3.network.Message;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 /**
  *
  * @author mrowlie
  */
 public class Input implements Runnable {
-
+    boolean running =  true;
+    static ConcurrentLinkedQueue<InputContainer> inputQueue = new ConcurrentLinkedQueue<InputContainer>();
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        update();
+    }
+    
+    private void update(){
+        while(running){
+            while(!inputQueue.isEmpty()){
+                handleMessage(inputQueue.remove());
+            }
+        }
+    }
+    
+    public void addMessage(InputContainer inputContainer){
+        inputQueue.add(inputContainer);      
+    }
+    
+    public void handleMessage(InputContainer inputContainer){
+        
     }
     
 }
