@@ -5,15 +5,54 @@
  */
 package client;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
  *
  * @author mrowlie
  */
 public class Modeling implements Runnable {
-
+    ReentrantLock timeLock;
+    Boolean running = true;
+    
+    float currentTime;
+    float timeNextFrame;
+    
+    public void initialize(){
+        
+    }
+    
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        update();
+    }
+    
+    public void update(){
+        while(running){
+            timeLock.lock();
+            try{
+                currentTime = timeNextFrame;
+                timeNextFrame = 0f;
+            }
+            finally{
+                timeLock.unlock();
+            }
+            
+            
+        }
+        
+        
+        
+    }
+    
+    public void updateTime(float tpf){
+        timeLock.lock();
+        try{
+            timeNextFrame += tpf;
+        }
+        finally{
+            timeLock.unlock();
+        }
     }
     
 }

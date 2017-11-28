@@ -5,17 +5,51 @@
  */
 package client;
 
+import com.jme3.network.Client;
 import com.jme3.network.Message;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  *
  * @author mrowlie
  */
 public class NetWrite implements Runnable {
-
+    
+    boolean exit = false;
+    Client myClient;
+    
+    static ConcurrentLinkedQueue<Message> messageQueue = new ConcurrentLinkedQueue<Message>();
+    
+    public NetWrite(Client myClient){
+        this.myClient = myClient;
+        
+    }
+    
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        initialize();
+        update();
+        destroy();
+    }
+    
+    private void initialize(){
+        
+    }
+    
+    private void update(){
+        while(!exit){
+            if(!messageQueue.isEmpty()){
+                Message message = messageQueue.remove();
+                myClient.send(message);
+            }
+        }
+    }
+    
+    public static void addMessage(Message message){
+        messageQueue.add(message);
+    }
+    private void destroy(){
+        
     }
     
 }

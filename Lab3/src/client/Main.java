@@ -24,7 +24,13 @@ public class Main extends SimpleApplication {
     public static final int VERSION = 1;
     
     Client myClient;
-
+    Thread netReadThread;
+    Thread netWriteThread;
+    
+    //test
+    float timeElapsed = 0;
+    static final float TIME = 10f;
+    //
     public static void main(String[] args) {
         Main app = new Main();
         app.start();
@@ -32,35 +38,37 @@ public class Main extends SimpleApplication {
     //test 2
 
     @Override
-    public void simpleInitApp() {
-        Box b = new Box(1, 1, 1);
-        Geometry geom = new Geometry("Box", b);
-
-        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        mat.setColor("Color", ColorRGBA.Blue);
-        geom.setMaterial(mat);
-
-        rootNode.attachChild(geom);
-        
+    public void simpleInitApp() {        
         //Register packets
         Serializer.registerClass(TestPacket.class);
         
         //Start client
         try{
+            NetRead netRead =  new NetRead();
             myClient = Network.connectToServer(NAME, VERSION, DEFAULT_SERVER, PORT, PORT);
-            myClient.start();
-            myClient.addMessageListener(new NetRead());
-            myClient.send(new TestPacket("Hej"));
+            myClient.addMessageListener(netRead);
+            myClient.start();       
+            
+            netWriteThread = new Thread(new NetWrite(myClient));
+            netReadThread = new Thread(netRead);
+            netWriteThread.start();
+            netReadThread.start();
         }
         catch(Exception e){
             System.out.println("ERROR CONNECTING");
             System.out.println(e.getMessage());
         }
+        
+        
     }
 
     @Override
     public void simpleUpdate(float tpf) {
-        //TODO: add update code
+        timeElapsed += tpf;
+        if(timeElapsed > TIME){
+            NetWrite.addMessage(new TestPacket("Hej server"));
+            timeElapsed = 0f;
+        }
     }
 
     @Override

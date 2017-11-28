@@ -8,6 +8,7 @@ package client;
 import com.jme3.network.Client;
 import com.jme3.network.Message;
 import com.jme3.network.MessageListener;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import networking.Packet;
 
 /**
@@ -15,18 +16,47 @@ import networking.Packet;
  * @author mrowlie
  */
 public class NetRead implements Runnable, MessageListener<Client> {
-
+    
+    boolean exit = false;
+    
+    ConcurrentLinkedQueue<Message> messageQueue;
+    
+    public NetRead(){
+        messageQueue = new ConcurrentLinkedQueue<Message>();
+    }
+    
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        initialize();
+        update();
+        destroy();
     }
+    
+    private void initialize(){
+        
+    }
+    
+    private void update(){
+        while(!this.exit) {
+            if(!messageQueue.isEmpty()){
+                Message message = messageQueue.remove();
+                if(message instanceof Packet.TestPacket) {
+                    Packet.TestPacket p = (Packet.TestPacket) message;
+                    System.out.println(p.getMessage());
+                }
+                
+            }
+        }
+    }
+    
+    private void destroy(){
+        
+    }
+    
 
     @Override
     public void messageReceived(Client source, Message m) {
-        if(m instanceof Packet.TestPacket){
-           Packet.TestPacket packet = (Packet.TestPacket)m;
-           System.out.println(packet.getMessage());
-        }
+        messageQueue.add(m);
     }
     
 }
