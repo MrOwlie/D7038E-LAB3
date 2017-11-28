@@ -108,8 +108,33 @@ public class Packet {
         
     }
     @Serializable
-    public static class startGame extends MyAbstractMessage {
-        public startGame() {}
+    public static class StartGame extends MyAbstractMessage {
+        public StartGame() {}
+    }
+    
+    public static class ClientReady extends MyAbstractMessage {
+        int pid;
+        
+        public ClientReady() {
+            
+        }
+        
+        public ClientReady(int pid) {
+            this.pid = pid;
+        }
+    }
+    
+    public static class ChangeState extends MyAbstractMessage {
+        protected byte state;
+        
+        public ChangeState() {
+            
+        }
+        
+        public ChangeState(byte state) {
+            this.state = state;
+        }
+        
     }
     
 }

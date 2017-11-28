@@ -9,6 +9,7 @@ import com.jme3.network.Filter;
 import com.jme3.network.Message;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import networking.Packet;
+import networking.Packet.ChangeState;
 import networking.Packet.DiskUpdate;
 import networking.Packet.MyAbstractMessage;
 import networking.Packet.ScoreUpdate;
@@ -47,6 +48,10 @@ public class NetWrite implements Runnable {
     
     public void sendTimeDiff(Filter filter, float timeDiff) {
         messageQueue.add(new MessageFilterPair(filter, new TimeDiff(timeDiff)));
+    }
+    
+    public void changeState(byte stateID){
+        messageQueue.add(new MessageFilterPair(null, new ChangeState(stateID)));
     }
     
     public void addMessage(MyAbstractMessage message, Filter filter) {

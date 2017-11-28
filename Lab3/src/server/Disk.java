@@ -5,15 +5,10 @@
  */
 package server;
 
-import com.jme3.asset.AssetManager;
-import com.jme3.material.Material;
-import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector2f;
-import com.jme3.scene.Geometry;
-import com.jme3.scene.Node;
-import com.jme3.scene.shape.Cylinder;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *
@@ -36,6 +31,7 @@ public abstract class Disk {
     private Vector2f v;
     private final float friction = 0.2f;
     
+    public static ConcurrentHashMap<Integer, Disk> diskMap = new ConcurrentHashMap();
     public int diskID;
     private static int diskAmount = 0;
     
@@ -45,7 +41,9 @@ public abstract class Disk {
             this.pos = new Vector2f();
             this.v = new Vector2f(0, 0);
             this.mass = FastMath.PI * FastMath.sqr(radius);
+            
             this.diskID = Disk.diskAmount++;
+            Disk.diskMap.put(this.diskID, this);
             
             Disk.disks.add(this);
         

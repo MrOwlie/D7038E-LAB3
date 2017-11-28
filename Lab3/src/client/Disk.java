@@ -14,6 +14,7 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Cylinder;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *
@@ -33,6 +34,10 @@ public abstract class Disk {
     public boolean hasCollided;
     
     public float radius;
+    
+    public static ConcurrentHashMap<Integer, Disk> diskMap = new ConcurrentHashMap();
+    public int diskID;
+    public static int diskAmount = 0;
     
     private float mass;
     
@@ -63,6 +68,8 @@ public abstract class Disk {
             
             this.mass = FastMath.PI * FastMath.sqr(radius);
             
+            this.diskID = Disk.diskAmount++;
+            Disk.diskMap.put(this.diskID, this);
             
             Disk.disks.add(this);
         

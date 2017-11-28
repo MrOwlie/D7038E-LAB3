@@ -30,7 +30,7 @@ public class PlayerDisk extends Disk{
         text = new BitmapText(font, false);
         text.setSize(26);
         text.setColor(ColorRGBA.Black);
-        text.setText("" + id);
+        text.setText("p" + id);
         text.setQueueBucket(RenderQueue.Bucket.Transparent);
         this.diskNode.attachChild(text);
         text.setLocalTranslation(- text.getHeight() / 2, text.getHeight() / 2, Main.FRAME_THICKNESS + 1f);
