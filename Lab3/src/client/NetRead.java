@@ -10,6 +10,13 @@ import com.jme3.network.Message;
 import com.jme3.network.MessageListener;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import networking.Packet;
+import networking.Packet.ChangeState;
+import networking.Packet.ClientReady;
+import networking.Packet.DiskUpdate;
+import networking.Packet.ScoreUpdate;
+import networking.Packet.StartGame;
+import networking.Packet.TimeDiff;
+import networking.Packet.TimeSync;
 
 /**
  *
@@ -40,12 +47,42 @@ public class NetRead implements Runnable, MessageListener<Client> {
         while(!this.exit) {
             if(!messageQueue.isEmpty()){
                 Message message = messageQueue.remove();
-                if(message instanceof Packet.TestPacket) {
-                    Packet.TestPacket p = (Packet.TestPacket) message;
-                    System.out.println(p.getMessage());
-                }
+                this.handlePacket(message);
+                
                 
             }
+        }
+    }
+    
+    private void handlePacket(Message message) {
+        if(message instanceof DiskUpdate){
+            
+            DiskUpdate packet = (DiskUpdate) message;
+            
+        } else if(message instanceof ScoreUpdate) {
+            
+            ScoreUpdate packet = (ScoreUpdate) message;
+            
+        } else if(message instanceof TimeSync) {
+            
+            TimeSync packet = (TimeSync) message;
+            
+        } else if(message instanceof TimeDiff) {
+            
+            TimeDiff packet = (TimeDiff) message;
+            
+        } else if(message instanceof StartGame) {
+            
+            StartGame packet = (StartGame) message;
+            
+        } else if(message instanceof ChangeState) {
+            
+            ChangeState packet = (ChangeState) message;
+            
+        } else if(message instanceof ClientReady) {
+            
+            ClientReady packet = (ClientReady) message;
+            
         }
     }
     
