@@ -39,12 +39,7 @@ public class NetRead implements Runnable, MessageListener<Client> {
     private void update(){
         while(!this.exit) {
             if(!messageQueue.isEmpty()){
-                Message message = messageQueue.remove();
-                if(message instanceof Packet.TestPacket) {
-                    Packet.TestPacket p = (Packet.TestPacket) message;
-                    System.out.println(p.getMessage());
-                }
-                
+                handleMessage(messageQueue.remove());   
             }
         }
     }
@@ -57,6 +52,10 @@ public class NetRead implements Runnable, MessageListener<Client> {
     @Override
     public void messageReceived(Client source, Message m) {
         messageQueue.add(m);
+    }
+    
+    public void handleMessage(Message message){
+       
     }
     
 }

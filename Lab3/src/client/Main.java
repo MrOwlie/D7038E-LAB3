@@ -1,6 +1,7 @@
 package client;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.asset.AssetManager;
 import com.jme3.network.Client;
 import com.jme3.network.Network;
 import com.jme3.network.serializing.Serializer;
@@ -39,6 +40,7 @@ public class Main extends SimpleApplication {
     
     static Client myClient;
     static Modeling model;
+    static AssetManager refAssetmanager;
     
     Thread netReadThread;
     Thread netWriteThread;
@@ -58,7 +60,7 @@ public class Main extends SimpleApplication {
     public void simpleInitApp() {        
         //Register packets
         Serializer.registerClass(TestPacket.class);
-        
+        refAssetmanager = assetManager;
         //Start client
         try{
             

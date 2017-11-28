@@ -3,14 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package server;
+package client;
 
+import static client.InitState.messageQueue;
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.asset.AssetManager;
 import com.jme3.math.Vector2f;
+import com.jme3.network.Message;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  *
@@ -18,11 +21,13 @@ import java.util.Random;
  */
 public class EndState extends BaseAppState {
 
-    
+    static ConcurrentLinkedQueue<Message> messageQueue = new ConcurrentLinkedQueue<Message>();
     
     @Override
     public void update(float tpf) {
-        
+        while(!messageQueue.isEmpty()){
+            handleMessage(messageQueue.remove());
+        }
     }
     @Override
     protected void initialize(Application app) {
@@ -43,11 +48,21 @@ public class EndState extends BaseAppState {
         resetGame();
     }
     
+    private void handleMessage(Message message){
+        if(true){
+            
+        }
+        
+        else{
+            System.out.println("Error : Unhandled message");
+        }
+        
+    }
+    
     private void resetGame() {
         
         ArrayList<Vector2f> positivePos = new ArrayList();
         ArrayList<Vector2f> negativePos = new ArrayList();
-        ArrayList<Vector2f> playerPos = new ArrayList();
         
         positivePos.add(new Vector2f(- Main.POSNEG_MAX_COORD, Main.POSNEG_MAX_COORD));
         positivePos.add(new Vector2f(0, Main.POSNEG_MAX_COORD));
@@ -67,16 +82,6 @@ public class EndState extends BaseAppState {
         negativePos.add(new Vector2f(Main.POSNEG_BETWEEN_COORD, - Main.POSNEG_MAX_COORD));
         negativePos.add(new Vector2f(- Main.POSNEG_BETWEEN_COORD, - Main.POSNEG_MAX_COORD));
         
-        playerPos.add(new Vector2f(-Main.PLAYER_COORD, Main.PLAYER_COORD));
-        playerPos.add(new Vector2f(0, Main.PLAYER_COORD));
-        playerPos.add(new Vector2f(Main.PLAYER_COORD, Main.PLAYER_COORD));
-        playerPos.add(new Vector2f(-Main.PLAYER_COORD, 0));
-        playerPos.add(new Vector2f(0, 0));
-        playerPos.add(new Vector2f(Main.PLAYER_COORD, 0));
-        playerPos.add(new Vector2f(-Main.PLAYER_COORD, -Main.PLAYER_COORD));
-        playerPos.add(new Vector2f(0, -Main.PLAYER_COORD));
-        playerPos.add(new Vector2f(Main.PLAYER_COORD, -Main.PLAYER_COORD));
-        
         Random rand = new Random();
         
         for(Disk d : Disk.disks) {
@@ -94,15 +99,7 @@ public class EndState extends BaseAppState {
                 nd.setPosition(newPos);
                 nd.randomizeVelocity();
                 
-            }
-            if(d.getClass() == PlayerDisk.class) {
-                
-                PlayerDisk pd = (PlayerDisk) d;
-                Vector2f newPos = playerPos.remove(rand.nextInt(playerPos.size()));
-                pd.setPosition(newPos);
-                pd.setVelocity(0, 0);
-            }
-            
+            }            
         }
     }
     
