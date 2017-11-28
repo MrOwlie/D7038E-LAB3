@@ -5,6 +5,8 @@
  */
 package client;
 
+import com.jme3.network.Message;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -12,11 +14,15 @@ import java.util.concurrent.locks.ReentrantLock;
  * @author mrowlie
  */
 public class Modeling implements Runnable {
-    ReentrantLock timeLock;
+    ConcurrentLinkedQueue<Message> messageQueue = new ConcurrentLinkedQueue<Message>();
+    
+    ReentrantLock frameTimeLock = new ReentrantLock();
+    ReentrantLock gameTimeLock = new ReentrantLock();
     Boolean running = true;
     
-    float currentTime;
-    float timeNextFrame;
+    float timeElpasedThisFrame = 0f;
+    float timeElpasedNextFrame = 0f;
+    float gameTimeElpased = 0f;
     
     public void initialize(){
         
@@ -29,30 +35,53 @@ public class Modeling implements Runnable {
     
     public void update(){
         while(running){
-            timeLock.lock();
+            while(!messageQueue.isEmpty()){
+                handleMessage(messageQueue.remove());
+            }            
+            frameTimeLock.lock();
             try{
-                currentTime = timeNextFrame;
-                timeNextFrame = 0f;
+                timeElpasedThisFrame = timeElpasedNextFrame;
+                timeElpasedNextFrame = 0f;
             }
             finally{
-                timeLock.unlock();
+                frameTimeLock.unlock();
             }
-            
-            
-        }
-        
-        
+            if(timeElpasedThisFrame != 0f){
+                for(Disk d : server.Disk.disks){
+                    d.tick(timeElpasedThisFrame);
+                }
+            }
+        }     
         
     }
     
-    public void updateTime(float tpf){
-        timeLock.lock();
+    public void updateFrameTime(float tpf){
+        frameTimeLock.lock();
         try{
-            timeNextFrame += tpf;
+            timeElpasedNextFrame += tpf;
         }
         finally{
-            timeLock.unlock();
+            frameTimeLock.unlock();
         }
+    }
+    
+    public void updateGameTime(float tpf){
+        gameTimeLock.lock();
+        try{
+            gameTimeElpased += tpf;
+        }
+        
+        finally{
+            gameTimeLock.unlock();
+        }
+    }
+    
+    public void handleMessage(Message message){
+        
+    }
+    
+    public void addMessage(Message message){
+        messageQueue.add(message);
     }
     
 }

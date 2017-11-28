@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package server;
+package client;
 
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
@@ -13,14 +13,11 @@ import com.jme3.app.state.BaseAppState;
  * @author mrowlie
  */
 public class GameState extends BaseAppState {
-
     
     @Override
     public void update(float tpf) {
-        for(Disk d : Disk.disks){
-            d.tick(tpf);
-        }
-        
+        Main.model.updateFrameTime(tpf);
+        Main.model.updateGameTime(tpf);
     }
     @Override
     protected void initialize(Application app) {

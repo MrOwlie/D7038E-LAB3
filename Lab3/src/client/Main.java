@@ -1,14 +1,10 @@
 package client;
 
 import com.jme3.app.SimpleApplication;
-import com.jme3.material.Material;
-import com.jme3.math.ColorRGBA;
 import com.jme3.network.Client;
 import com.jme3.network.Network;
 import com.jme3.network.serializing.Serializer;
 import com.jme3.renderer.RenderManager;
-import com.jme3.scene.Geometry;
-import com.jme3.scene.shape.Box;
 import networking.Packet.TestPacket;
 
 /**
@@ -24,8 +20,11 @@ public class Main extends SimpleApplication {
     public static final int VERSION = 1;
     
     Client myClient;
+    Modeling model;
+    
     Thread netReadThread;
     Thread netWriteThread;
+    Thread modelingThread;
     
     //test
     float timeElapsed = 0;
@@ -44,6 +43,8 @@ public class Main extends SimpleApplication {
         
         //Start client
         try{
+            
+            model = new Modeling();
             NetRead netRead =  new NetRead();
             myClient = Network.connectToServer(NAME, VERSION, DEFAULT_SERVER, PORT, PORT);
             myClient.addMessageListener(netRead);
@@ -51,8 +52,11 @@ public class Main extends SimpleApplication {
             
             netWriteThread = new Thread(new NetWrite(myClient));
             netReadThread = new Thread(netRead);
+            modelingThread = new Thread(model);
+            
             netWriteThread.start();
             netReadThread.start();
+            modelingThread.start();
         }
         catch(Exception e){
             System.out.println("ERROR CONNECTING");
