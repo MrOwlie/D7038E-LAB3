@@ -6,6 +6,7 @@
 package server;
 
 
+import com.jme3.network.HostedConnection;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -17,16 +18,48 @@ public class PlayerDisk extends Disk{
     
     public int score;
     
-    public int pid;
     public static int playerAmount = 0;
-    public static ConcurrentHashMap<Integer, PlayerDisk> playerMap = new ConcurrentHashMap();
+    public HostedConnection conn;
+    
+    public boolean[] keyPressed = new boolean[4];
     
     @SuppressWarnings("LeakingThisInConstructor")
-    public PlayerDisk(int id) {
+    public PlayerDisk(HostedConnection conn) {
         super(Main.PLAYER_R);
-        this.pid = PlayerDisk.playerAmount++;
-        PlayerDisk.playerMap.put(this.pid, this);
+        this.conn = conn;
         score = 0;
+        
+    }
+    
+    @Override
+    public void tick(float tpf) {
+        super.tick(tpf);
+        for(int i = 0; i < this.keyPressed.length; i++) {
+            if(this.keyPressed[i] == true){
+                switch(i) {
+                    case 0:
+                        this.moveNorth(tpf);
+                        NetWrite.updatePlayerDisk(this);
+                        break;
+                        
+                    case 1:
+                        this.moveWest(tpf);
+                        NetWrite.updatePlayerDisk(this);
+                        break;
+                        
+                    case 2:
+                        this.moveSouth(tpf);
+                        NetWrite.updatePlayerDisk(this);
+                        break;
+                        
+                    case 3:
+                        this.moveEast(tpf);
+                        NetWrite.updatePlayerDisk(this);
+                        break;
+                        
+                }
+            }
+        }
         
     }
     

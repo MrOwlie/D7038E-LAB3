@@ -17,7 +17,7 @@ public class MessageFilterPair {
         public Filter filter;
         public Message message;
         
-        public MessageFilterPair(Filter filter, Message message) {
+        public MessageFilterPair(Message message, Filter filter) {
             this.filter = filter;
             this.message = message;
             

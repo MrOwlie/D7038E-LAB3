@@ -17,8 +17,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public abstract class Disk {
     
     
-    public static ArrayList<Disk> disks = new ArrayList<Disk>();
-    
     public boolean justCollided;
     public boolean hasCollided;
     
@@ -32,6 +30,7 @@ public abstract class Disk {
     private final float friction = 0.2f;
     
     public static ConcurrentHashMap<Integer, Disk> diskMap = new ConcurrentHashMap();
+    public static ArrayList<Disk> disks = new ArrayList();
     public int diskID;
     private static int diskAmount = 0;
     
@@ -44,15 +43,14 @@ public abstract class Disk {
             
             this.diskID = Disk.diskAmount++;
             Disk.diskMap.put(this.diskID, this);
-            
             Disk.disks.add(this);
         
     }
     
     public void tick(float tpf) {
-        if(!Disk.disks.contains(this)){
-            Disk.disks.add(this);
-        }
+        //if(!Disk.disks.contains(this)){
+        //    Disk.disks.add(this);
+        //}
         
         pos.x = pos.x + v.x * tpf;
         pos.y = pos.y + v.y * tpf;
@@ -87,25 +85,25 @@ public abstract class Disk {
         if(pos.y + radius + v.y * tpf > Main.FREE_AREA_WIDTH / 2){
             v.set(v.x, -v.y);
             this.pos.y = Main.FREE_AREA_WIDTH / 2 - (this.radius * 1.1f);
-            Main.server.netWrite.updateDisk(this.diskID, this.pos.x, this.pos.y, this.v.x, this.v.y);
+            NetWrite.updateDisk(this.diskID, this.pos.x, this.pos.y, this.v.x, this.v.y);
         }
         //south
         if(pos.y - radius + v.y * tpf < -Main.FREE_AREA_WIDTH / 2){
             v.set(v.x, -v.y);
             this.pos.y = - Main.FREE_AREA_WIDTH / 2 + (this.radius * 1.1f);
-            Main.server.netWrite.updateDisk(this.diskID, this.pos.x, this.pos.y, this.v.x, this.v.y);
+            NetWrite.updateDisk(this.diskID, this.pos.x, this.pos.y, this.v.x, this.v.y);
         }
         //east
         if(pos.x + radius + v.x * tpf > Main.FREE_AREA_WIDTH / 2){
             v.set(-v.x, v.y);
             this.pos.x = Main.FREE_AREA_WIDTH / 2 - (this.radius * 1.1f);
-            Main.server.netWrite.updateDisk(this.diskID, this.pos.x, this.pos.y, this.v.x, this.v.y);
+            NetWrite.updateDisk(this.diskID, this.pos.x, this.pos.y, this.v.x, this.v.y);
         }
         //west
         if(pos.x - radius + v.x * tpf < -Main.FREE_AREA_WIDTH / 2){
             v.set(-v.x, v.y);
             this.pos.x = - Main.FREE_AREA_WIDTH / 2 + (this.radius * 1.1f);
-            Main.server.netWrite.updateDisk(this.diskID, this.pos.x, this.pos.y, this.v.x, this.v.y);
+            NetWrite.updateDisk(this.diskID, this.pos.x, this.pos.y, this.v.x, this.v.y);
         }
         
         //Disk collisions
@@ -190,8 +188,8 @@ public abstract class Disk {
         disk2.v.x = (float) (cosAngle * finalSpeedX2 - sinAngle * finalSpeedY2);
         disk2.v.y = (float) (sinAngle * finalSpeedX2 + cosAngle * finalSpeedY2);
 
-        Main.server.netWrite.updateDisk(disk1.diskID, disk1.pos.x, disk1.pos.y, disk1.v.x, disk1.v.y);
-        Main.server.netWrite.updateDisk(disk2.diskID, disk2.pos.x, disk2.pos.y, disk2.v.x, disk2.v.y);
+        NetWrite.updateDisk(disk1.diskID, disk1.pos.x, disk1.pos.y, disk1.v.x, disk1.v.y);
+        NetWrite.updateDisk(disk2.diskID, disk2.pos.x, disk2.pos.y, disk2.v.x, disk2.v.y);
 
         
     }

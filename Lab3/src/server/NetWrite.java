@@ -6,9 +6,12 @@
 package server;
 
 import com.jme3.network.Filter;
+import com.jme3.network.Filters;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import networking.Packet.ChangeState;
+import networking.Packet.DisconnectClient;
 import networking.Packet.DiskUpdate;
+import networking.Packet.InitClient;
 import networking.Packet.MyAbstractMessage;
 import networking.Packet.ScoreUpdate;
 import networking.Packet.TimeDiff;
@@ -22,41 +25,56 @@ public class NetWrite implements Runnable {
 
     boolean exit = false;
     
-    ConcurrentLinkedQueue<MessageFilterPair> messageQueue;
+    static ConcurrentLinkedQueue<MessageFilterPair> messageQueue;
     
-    GameServer server;
+    static GameServer server;
     
     public NetWrite(GameServer server) {
         messageQueue = new ConcurrentLinkedQueue();
-        this.server = server;
+        NetWrite.server = server;
     }
     
-    public void updateDisk(int pid, float x, float y, float vx, float vy){
-        messageQueue.add(new MessageFilterPair(null, new DiskUpdate(pid, x, y, vx, vy)));
+    public static void updateDisk(int pid, float x, float y, float vx, float vy){
+        messageQueue.add(new MessageFilterPair(new DiskUpdate(pid, x, y, vx, vy), null));
     }
     
-    public void updateScore(int pid, int newScore) {
-        messageQueue.add(new MessageFilterPair(null, new ScoreUpdate(pid, newScore)));
+    public static void updatePlayerDisk(PlayerDisk player) {
+        
+        messageQueue.add(new MessageFilterPair(
+                    new DiskUpdate(player.diskID, player.pos.x, player.pos.y, player.getVelocity().x, player.getVelocity().y), 
+                    Filters.in(player.conn)));
     }
     
-    public void syncTime(){
-        messageQueue.add(new MessageFilterPair(null, new TimeSync(Main.timeElapsed)));
+    public static void initClient(int diskID, Filter filter) {
+        messageQueue.add(new MessageFilterPair(new InitClient(diskID), filter));
     }
     
-    public void sendTimeDiff(Filter filter, float timeDiff) {
-        messageQueue.add(new MessageFilterPair(filter, new TimeDiff(timeDiff)));
+    public static void disconnectClient(int diskID, Filter filter) {
+        messageQueue.add(new MessageFilterPair(new DisconnectClient(diskID), null));
     }
     
-    public void changeState(byte stateID){
-        messageQueue.add(new MessageFilterPair(null, new ChangeState(stateID)));
+    public static void updateScore(int pid, int newScore) {
+        messageQueue.add(new MessageFilterPair(new ScoreUpdate(pid, newScore), null));
     }
     
-    public void addMessage(MyAbstractMessage message, Filter filter) {
-        messageQueue.add(new MessageFilterPair(filter, message));
+    public static void syncTime(Filter filter){
+        messageQueue.add(new MessageFilterPair(new TimeSync(Main.timeElapsed), filter));
     }
     
-    public void addMessage(MyAbstractMessage message) {
-        messageQueue.add(new MessageFilterPair(null, message));
+    public static void sendTimeDiff(float timeDiff, Filter filter) {
+        messageQueue.add(new MessageFilterPair(new TimeDiff(timeDiff), filter));
+    }
+    
+    public static void changeState(byte stateID){
+        messageQueue.add(new MessageFilterPair(new ChangeState(stateID), null));
+    }
+    
+    public static void addMessage(MyAbstractMessage message, Filter filter) {
+        messageQueue.add(new MessageFilterPair(message, filter));
+    }
+    
+    public static void addMessage(MyAbstractMessage message) {
+        messageQueue.add(new MessageFilterPair(message, null));
     }
     
     

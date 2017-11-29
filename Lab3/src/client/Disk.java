@@ -69,7 +69,6 @@ public abstract class Disk {
             
             this.diskID = diskID;
             Disk.diskMap.put(this.diskID, this);
-            
             Disk.disks.add(this);
         
     }
