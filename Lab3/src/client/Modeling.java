@@ -9,6 +9,7 @@ import com.jme3.network.Message;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.locks.ReentrantLock;
 import networking.Packet.DiskUpdate;
+import networking.Packet.InitClient;
 import networking.Packet.ScoreUpdate;
 import networking.Packet.TimeSync;
 
@@ -113,7 +114,11 @@ public class Modeling implements Runnable {
             } finally {
                 this.gameTimeLock.unlock();
             }
+        } else if (message instanceof InitClient){
+            InitClient initClientMessage = (InitClient)message;
+            PlayerDisk player = new PlayerDisk(Main.refAssetManager, initClientMessage.getDiskID());
         }
+        
     }
     
     public static void addMessage(Message message){

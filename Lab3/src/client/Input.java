@@ -28,7 +28,7 @@ public class Input implements Runnable {
         }
     }
     
-    public void addMessage(InputContainer inputContainer){
+    public static void addMessage(InputContainer inputContainer){
         inputQueue.add(inputContainer);      
     }
     

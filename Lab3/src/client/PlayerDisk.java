@@ -24,13 +24,12 @@ public class PlayerDisk extends Disk{
     BitmapFont font;
     BitmapText text;
     
-    public int pid;
     public static int playerAmount;
     public static ConcurrentHashMap<Integer, PlayerDisk> playerMap = new ConcurrentHashMap();
     
     @SuppressWarnings("LeakingThisInConstructor")
     public PlayerDisk(AssetManager assetManager, int id) {
-        super(assetManager, ColorRGBA.Blue, Main.PLAYER_R);
+        super(assetManager, ColorRGBA.Blue, Main.PLAYER_R, id);
         score = 0;
         font = assetManager.loadFont("Interface/Fonts/Console.fnt");
         text = new BitmapText(font, false);
@@ -41,8 +40,7 @@ public class PlayerDisk extends Disk{
         this.diskNode.attachChild(text);
         text.setLocalTranslation(- text.getHeight() / 2, text.getHeight() / 2, Main.FRAME_THICKNESS + 1f);
         
-        this.pid = PlayerDisk.playerAmount++;
-        PlayerDisk.playerMap.put(this.pid, this);
+        PlayerDisk.playerMap.put(id, this);
         
     }
     

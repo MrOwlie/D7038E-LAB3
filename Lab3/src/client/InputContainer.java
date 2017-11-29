@@ -18,16 +18,16 @@ public abstract class InputContainer {
     }
     
 }
-class AnalogInputContainer extends InputContainer{
+class ActionInputContainer extends InputContainer{
     boolean isPressed;
-    public AnalogInputContainer(float tpf, String name, Boolean isPressed){
+    public ActionInputContainer(float tpf, String name, Boolean isPressed){
         super(tpf, name);
         this.isPressed = isPressed;     
     }
 }
 
-class ActionInputContainer extends InputContainer{
-    public ActionInputContainer(float tpf, String name){
+class AnalogInputContainer extends InputContainer{
+    public AnalogInputContainer(float tpf, String name){
         super(tpf, name);   
     }
 }

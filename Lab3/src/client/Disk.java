@@ -37,7 +37,6 @@ public abstract class Disk {
     
     public static ConcurrentHashMap<Integer, Disk> diskMap = new ConcurrentHashMap();
     public int diskID;
-    public static int diskAmount = 0;
     
     private float mass;
     
@@ -47,7 +46,7 @@ public abstract class Disk {
     private final float friction = 0.2f;
     
     @SuppressWarnings("LeakingThisInConstructor")
-    public Disk(AssetManager assetManager, ColorRGBA color, float radius) {
+    public Disk(AssetManager assetManager, ColorRGBA color, float radius, int diskID) {
         
             
             this.radius = radius;
@@ -68,7 +67,7 @@ public abstract class Disk {
             
             this.mass = FastMath.PI * FastMath.sqr(radius);
             
-            this.diskID = Disk.diskAmount++;
+            this.diskID = diskID;
             Disk.diskMap.put(this.diskID, this);
             
             Disk.disks.add(this);
@@ -76,9 +75,9 @@ public abstract class Disk {
     }
     
     public void tick(float tpf) {
-        if(!Disk.disks.contains(this)){
-            Disk.disks.add(this);
-        }
+        //if(!Disk.disks.contains(this)){
+        //    Disk.disks.add(this);
+        //}
         
         pos.x = pos.x + v.x * tpf;
         pos.y = pos.y + v.y * tpf;

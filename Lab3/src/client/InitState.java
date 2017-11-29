@@ -7,14 +7,9 @@ package client;
 
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
-import com.jme3.asset.AssetManager;
-import com.jme3.math.ColorRGBA;
-import com.jme3.math.Vector2f;
 import com.jme3.network.Message;
-import com.jme3.scene.Node;
-import java.util.ArrayList;
-import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import networking.Packet.InitClient;
 
 /**
  *
@@ -22,12 +17,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public class InitState extends BaseAppState{
 
-    static ConcurrentLinkedQueue<Message> messageQueue = new ConcurrentLinkedQueue<Message>();
     @Override
     public void update(float tpf) {
-        while(!messageQueue.isEmpty()){
-            handleMessage(messageQueue.remove());
-        }
     }
     
     @Override
@@ -47,35 +38,25 @@ public class InitState extends BaseAppState{
     protected void onDisable() {
     }
     
-    private void handleMessage(Message message){
-        if(true){
-            
-        }
-        
-        else{
-            System.out.println("Error : Unhandled message");
-        }
-        
-    }
     
     public void initDisks() {
-        PositiveDisk pd0 = new PositiveDisk(Main.refAssetmanager, - Main.POSNEG_MAX_COORD, Main.POSNEG_MAX_COORD);
-        PositiveDisk pd1 = new PositiveDisk(Main.refAssetmanager, 0, Main.POSNEG_MAX_COORD);
-        PositiveDisk pd2 = new PositiveDisk(Main.refAssetmanager, Main.POSNEG_MAX_COORD, Main.POSNEG_MAX_COORD);
-        PositiveDisk pd3 = new PositiveDisk(Main.refAssetmanager, - Main.POSNEG_MAX_COORD, 0);
-        PositiveDisk pd4 = new PositiveDisk(Main.refAssetmanager, Main.POSNEG_MAX_COORD, 0);
-        PositiveDisk pd5 = new PositiveDisk(Main.refAssetmanager, - Main.POSNEG_MAX_COORD, - Main.POSNEG_MAX_COORD);
-        PositiveDisk pd6 = new PositiveDisk(Main.refAssetmanager, 0, - Main.POSNEG_MAX_COORD);
-        PositiveDisk pd7 = new PositiveDisk(Main.refAssetmanager, Main.POSNEG_MAX_COORD, - Main.POSNEG_MAX_COORD);
+        PositiveDisk pd0 = new PositiveDisk(Main.refAssetManager, - Main.POSNEG_MAX_COORD, Main.POSNEG_MAX_COORD);
+        PositiveDisk pd1 = new PositiveDisk(Main.refAssetManager, 0, Main.POSNEG_MAX_COORD);
+        PositiveDisk pd2 = new PositiveDisk(Main.refAssetManager, Main.POSNEG_MAX_COORD, Main.POSNEG_MAX_COORD);
+        PositiveDisk pd3 = new PositiveDisk(Main.refAssetManager, - Main.POSNEG_MAX_COORD, 0);
+        PositiveDisk pd4 = new PositiveDisk(Main.refAssetManager, Main.POSNEG_MAX_COORD, 0);
+        PositiveDisk pd5 = new PositiveDisk(Main.refAssetManager, - Main.POSNEG_MAX_COORD, - Main.POSNEG_MAX_COORD);
+        PositiveDisk pd6 = new PositiveDisk(Main.refAssetManager, 0, - Main.POSNEG_MAX_COORD);
+        PositiveDisk pd7 = new PositiveDisk(Main.refAssetManager, Main.POSNEG_MAX_COORD, - Main.POSNEG_MAX_COORD);
         
-        NegativeDisk nd0 = new NegativeDisk(Main.refAssetmanager, - Main.POSNEG_MAX_COORD, Main.POSNEG_BETWEEN_COORD);
-        NegativeDisk nd1 = new NegativeDisk(Main.refAssetmanager, - Main.POSNEG_MAX_COORD, -Main.POSNEG_BETWEEN_COORD);
-        NegativeDisk nd2 = new NegativeDisk(Main.refAssetmanager, - Main.POSNEG_BETWEEN_COORD, Main.POSNEG_MAX_COORD);
-        NegativeDisk nd3 = new NegativeDisk(Main.refAssetmanager, Main.POSNEG_BETWEEN_COORD, Main.POSNEG_MAX_COORD);
-        NegativeDisk nd4 = new NegativeDisk(Main.refAssetmanager, Main.POSNEG_MAX_COORD, Main.POSNEG_BETWEEN_COORD);
-        NegativeDisk nd5 = new NegativeDisk(Main.refAssetmanager, Main.POSNEG_MAX_COORD, - Main.POSNEG_BETWEEN_COORD);
-        NegativeDisk nd6 = new NegativeDisk(Main.refAssetmanager, Main.POSNEG_BETWEEN_COORD, - Main.POSNEG_MAX_COORD);
-        NegativeDisk nd7 = new NegativeDisk(Main.refAssetmanager, - Main.POSNEG_BETWEEN_COORD, - Main.POSNEG_MAX_COORD);    
+        NegativeDisk nd0 = new NegativeDisk(Main.refAssetManager, - Main.POSNEG_MAX_COORD, Main.POSNEG_BETWEEN_COORD);
+        NegativeDisk nd1 = new NegativeDisk(Main.refAssetManager, - Main.POSNEG_MAX_COORD, -Main.POSNEG_BETWEEN_COORD);
+        NegativeDisk nd2 = new NegativeDisk(Main.refAssetManager, - Main.POSNEG_BETWEEN_COORD, Main.POSNEG_MAX_COORD);
+        NegativeDisk nd3 = new NegativeDisk(Main.refAssetManager, Main.POSNEG_BETWEEN_COORD, Main.POSNEG_MAX_COORD);
+        NegativeDisk nd4 = new NegativeDisk(Main.refAssetManager, Main.POSNEG_MAX_COORD, Main.POSNEG_BETWEEN_COORD);
+        NegativeDisk nd5 = new NegativeDisk(Main.refAssetManager, Main.POSNEG_MAX_COORD, - Main.POSNEG_BETWEEN_COORD);
+        NegativeDisk nd6 = new NegativeDisk(Main.refAssetManager, Main.POSNEG_BETWEEN_COORD, - Main.POSNEG_MAX_COORD);
+        NegativeDisk nd7 = new NegativeDisk(Main.refAssetManager, - Main.POSNEG_BETWEEN_COORD, - Main.POSNEG_MAX_COORD);    
     }
     
 }
