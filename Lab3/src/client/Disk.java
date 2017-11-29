@@ -74,7 +74,7 @@ public abstract class Disk {
         
     }
     
-    public void tick(float tpf) {
+    public synchronized void tick(float tpf) {
         //if(!Disk.disks.contains(this)){
         //    Disk.disks.add(this);
         //}
