@@ -5,10 +5,13 @@
  */
 package server;
 
+import com.jme3.network.ConnectionListener;
 import com.jme3.network.Filters;
 import com.jme3.network.HostedConnection;
 import com.jme3.network.Message;
 import com.jme3.network.MessageListener;
+import com.jme3.network.Server;
+import java.util.Enumeration;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import networking.Packet.MyAbstractMessage;
 import networking.Packet.TestPacket;
@@ -19,7 +22,7 @@ import networking.Packet.TimeSync;
  *
  * @author mrowlie
  */
-public class NetRead implements Runnable, MessageListener<HostedConnection> {
+public class NetRead implements Runnable, MessageListener<HostedConnection>, ConnectionListener {
 
     GameServer server;
     
@@ -34,6 +37,7 @@ public class NetRead implements Runnable, MessageListener<HostedConnection> {
     
     private void initialize() {
         this.server.server.addMessageListener(this);
+        this.server.server.addConnectionListener(this);
     }
     
     private void update() {
@@ -48,7 +52,7 @@ public class NetRead implements Runnable, MessageListener<HostedConnection> {
                 if(m instanceof TimeSync) {
                     TimeSync p = (TimeSync) m;
                     float diff = (Main.timeElapsed - p.getTime()) / 2;
-                    this.server.server.broadcast(Filters.in(pair.c), new TimeDiff(diff));
+                    NetWrite.sendTimeDiff(diff, Filters.in(pair.c));
                 }
                 
             }
@@ -69,6 +73,30 @@ public class NetRead implements Runnable, MessageListener<HostedConnection> {
     @Override
     public void messageReceived(HostedConnection source, Message m) {
         NetRead.messageQueue.add(new MessageConnectionPair(m, source));
+    }
+
+    @Override
+    public void connectionAdded(Server server, HostedConnection conn) {
+        PlayerDisk player1 = new PlayerDisk(conn);
+        PlayerDisk player2 = new PlayerDisk(conn);
+        NetWrite.initClient(player1.diskID, Filters.in(conn));
+        NetWrite.initClient(player2.diskID, Filters.in(conn));
+        NetWrite.syncTime(Filters.in(conn));
+        
+    }
+
+    @Override
+    public void connectionRemoved(Server server, HostedConnection conn) {
+        Enumeration<Disk> players = PlayerDisk.diskMap.elements();
+        while(players.hasMoreElements()) {
+            Disk disk = players.nextElement();
+            if(disk instanceof PlayerDisk){
+                PlayerDisk player = (PlayerDisk) disk;
+                if(player.conn.getId() == conn.getId()) {
+                    NetWrite.disconnectClient(player.diskID, null);
+                }
+            }
+        }
     }
     
 }

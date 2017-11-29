@@ -131,10 +131,6 @@ public class Packet {
         
     }
     @Serializable
-    public static class StartGame extends MyAbstractMessage {
-        public StartGame() {}
-    }
-    @Serializable
     public static class ClientReady extends MyAbstractMessage {
         int diskID;
         
@@ -200,6 +196,53 @@ public class Packet {
             return this.diskID;
         }
         
+    }
+    
+    @Serializable
+    public static class InputPressed extends MyAbstractMessage {
+        byte key;
+        int diskID;
+        
+        public InputPressed() {
+            
+        }
+        
+        public InputPressed(int diskID, byte key) {
+            this.key = key;
+            this.diskID = diskID;
+        }
+        
+        public byte getKey(){
+            return this.key;
+        }
+        
+        public int getDiskID() {
+            return this.diskID;
+        }
+    }
+    
+    @Serializable
+    public static class InputReleased extends MyAbstractMessage {
+        //0 = up, 1 = left, 2 = down, 3 = right
+        byte key;
+        int diskID;
+        
+        public InputReleased() {
+            
+        }
+        
+        public InputReleased(int diskID, byte key) {
+            this.key = key;
+            this.diskID = diskID;
+        }
+        
+        public byte getKey(){
+            return this.key;
+        }
+        
+        public int getDiskID() {
+            return this.diskID;
+        }
     }
 }
 
