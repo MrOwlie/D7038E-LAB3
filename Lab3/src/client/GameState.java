@@ -57,7 +57,7 @@ public class GameState extends BaseAppState {
     private final ActionListener actionListener = new ActionListener() {
         @Override
         public void onAction(String name, boolean isPressed, float tpf){
-            Input.addMessage(new ActionInputContainer(tpf, name, isPressed));
+            Modeling.addMessage(new ActionInputContainer(tpf, name, isPressed));
         }
     };
 

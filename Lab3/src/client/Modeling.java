@@ -27,7 +27,7 @@ public class Modeling implements Runnable {
     float timeElpasedThisFrame = 0f;
     float timeElpasedNextFrame = 0f;
     float gameTimeElpased = 0f;
-    float serverTimeDiff = 0f;
+    float serverTimeDiff = 0f;    
     
     public void initialize(){
         
@@ -117,6 +117,7 @@ public class Modeling implements Runnable {
         } else if (message instanceof InitClient){
             InitClient initClientMessage = (InitClient)message;
             PlayerDisk player = new PlayerDisk(Main.refAssetManager, initClientMessage.getDiskID());
+            Input.addPlayer(player);
         }
         
     }

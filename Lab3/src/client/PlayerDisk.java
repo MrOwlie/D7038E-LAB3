@@ -53,20 +53,20 @@ public class PlayerDisk extends Disk{
         this.score -= amount;
     }
     
-    public void moveNorth(float tpf){
-        //this.setVelocity(this.getVelocity().getX(), this.getVelocity().getY() + 500 * tpf);
+    public synchronized void moveNorth(float tpf){
+        this.setVelocity(this.getVelocity().getX(), this.getVelocity().getY() + 500 * tpf);
     }
     
-    public void moveSouth(float tpf){
-        //this.setVelocity(this.getVelocity().getX(), this.getVelocity().getY() - 500 * tpf);
+    public synchronized void moveSouth(float tpf){
+        this.setVelocity(this.getVelocity().getX(), this.getVelocity().getY() - 500 * tpf);
     }
     
-    public void moveEast(float tpf){
-        //this.setVelocity(this.getVelocity().getX() + 500 * tpf, this.getVelocity().getY());
+    public synchronized void moveEast(float tpf){
+        this.setVelocity(this.getVelocity().getX() + 500 * tpf, this.getVelocity().getY());
     }
     
-    public void moveWest(float tpf){
-        //this.setVelocity(this.getVelocity().getX() - 500 * tpf, this.getVelocity().getY());
+    public synchronized void moveWest(float tpf){
+        this.setVelocity(this.getVelocity().getX() - 500 * tpf, this.getVelocity().getY());
     }
     
 }
