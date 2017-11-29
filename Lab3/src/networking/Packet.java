@@ -134,19 +134,24 @@ public class Packet {
     public static class StartGame extends MyAbstractMessage {
         public StartGame() {}
     }
-    
+    @Serializable
     public static class ClientReady extends MyAbstractMessage {
-        int pid;
+        int diskID;
         
         public ClientReady() {
             
         }
         
-        public ClientReady(int pid) {
-            this.pid = pid;
+        public ClientReady(int diskID) {
+            this.diskID = diskID;
         }
+        
+        public int getDiskID() {
+            return this.diskID;
+        }
+        
     }
-    
+    @Serializable
     public static class ChangeState extends MyAbstractMessage {
         protected byte state;
         
@@ -158,8 +163,12 @@ public class Packet {
             this.state = state;
         }
         
+        public byte getState() {
+            return this.state;
+        }
+        
     }
-    
+    @Serializable
     public static class InitClient extends MyAbstractMessage{
         int diskID;
         public InitClient(){
@@ -169,7 +178,29 @@ public class Packet {
         public InitClient(int diskID){
             this.diskID = diskID;
         }
-    }  
+        
+        public int getDiskID() {
+            return this.diskID;
+        }
+    }
+    
+    @Serializable
+    public static class DisconnectClient extends MyAbstractMessage {
+        int diskID;
+        
+        public DisconnectClient() {
+            
+        }
+        
+        public DisconnectClient(int diskID) {
+            this.diskID = diskID;
+        }
+        
+        public int getDiskID(){
+            return this.diskID;
+        }
+        
+    }
 }
 
 
