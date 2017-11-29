@@ -42,6 +42,10 @@ public class Main extends SimpleApplication {
     static Modeling model;
     static AssetManager refAssetmanager;
     
+    static GameState gameState;
+    static InitState initState;
+    static EndState endState;
+    
     Thread netReadThread;
     Thread netWriteThread;
     Thread modelingThread;
@@ -62,6 +66,7 @@ public class Main extends SimpleApplication {
         Serializer.registerClass(TestPacket.class);
         refAssetmanager = assetManager;
         //Start client
+        
         try{
             
             model = new Modeling();

@@ -160,6 +160,16 @@ public class Packet {
         
     }
     
+    public static class InitClient extends MyAbstractMessage{
+        int diskID;
+        public InitClient(){
+            
+        }
+        
+        public InitClient(int diskID){
+            this.diskID = diskID;
+        }
+    }  
 }
 
 
