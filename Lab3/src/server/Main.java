@@ -8,7 +8,6 @@ package server;
 import com.jme3.app.SimpleApplication;
 import com.jme3.system.JmeContext;
 import java.util.ArrayList;
-import networking.Packet.TestPacket;
 
 /**
  *
@@ -40,10 +39,6 @@ public class Main extends SimpleApplication{
     static final float NEGDISK_R = 16f;
     
     public static Main app;
-    
-    public static int playerAmount = 1;
-    
-    public static ArrayList<PlayerDisk> players = new ArrayList();
     
     public static GameServer server;
 

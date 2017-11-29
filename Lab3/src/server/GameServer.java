@@ -5,8 +5,6 @@
  */
 package server;
 
-import com.jme3.network.Filter;
-import com.jme3.network.Message;
 import com.jme3.network.Network;
 import com.jme3.network.Server;
 import com.jme3.network.serializing.Serializer;

@@ -58,6 +58,22 @@ public class Packet {
             this.vy = vy;
         }
         
+        public int getDiskID() {
+            return this.diskID;
+        }
+        public float getX() {
+            return this.x;
+        }
+        public float getY() {
+            return this.y;
+        }
+        public float getVX() {
+            return this.vx;
+        }
+        public float getVY() {
+            return this.vy;
+        }
+        
     }
     @Serializable
     public static class ScoreUpdate extends MyAbstractMessage {
@@ -71,6 +87,13 @@ public class Packet {
         public ScoreUpdate(int pid, int newScore) {
             this.pid = pid;
             this.newScore = newScore;
+        }
+        
+        public int getPid() {
+            return this.pid;
+        }
+        public int getNewScore() {
+            return this.newScore;
         }
     }
     @Serializable

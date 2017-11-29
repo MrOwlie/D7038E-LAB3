@@ -7,7 +7,6 @@ package server;
 
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
-import com.jme3.asset.AssetManager;
 import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 import java.util.Random;
@@ -102,6 +101,8 @@ public class EndState extends BaseAppState {
                 pd.setPosition(newPos);
                 pd.setVelocity(0, 0);
             }
+            
+            Main.server.netWrite.updateDisk(d.diskID, d.pos.x, d.pos.y, d.getVelocity().x, d.getVelocity().y);
             
         }
     }

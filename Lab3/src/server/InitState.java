@@ -7,10 +7,7 @@ package server;
 
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
-import com.jme3.asset.AssetManager;
-import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector2f;
-import com.jme3.scene.Node;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -72,7 +69,10 @@ public class InitState extends BaseAppState{
             if(d.getClass() == NegativeDisk.class) {
                 NegativeDisk nd = (NegativeDisk) d;
                 nd.randomizeVelocity();
+            } else {
+                break;
             }
+            Main.server.netWrite.updateDisk(d.diskID, d.pos.x, d.pos.y, d.getVelocity().x, d.getVelocity().y);
         }
         
         ArrayList<Vector2f> playerPos = new ArrayList();
@@ -87,17 +87,7 @@ public class InitState extends BaseAppState{
         playerPos.add(new Vector2f(0, -Main.PLAYER_COORD));
         playerPos.add(new Vector2f(Main.PLAYER_COORD, -Main.PLAYER_COORD));
         
-        Random rand = new Random();
-        
-        for(int i = 0; i < Main.playerAmount; i++){
-            Main.players.add(new PlayerDisk(i));
-            
-        }
-        
-        for(PlayerDisk p : Main.players) {
-            p.setPosition(playerPos.remove(rand.nextInt(playerPos.size())));
-            
-        }
+        // PLAYERS
         
     }
     

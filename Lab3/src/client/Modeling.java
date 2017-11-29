@@ -8,13 +8,16 @@ package client;
 import com.jme3.network.Message;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.locks.ReentrantLock;
+import networking.Packet.DiskUpdate;
+import networking.Packet.ScoreUpdate;
+import networking.Packet.TimeSync;
 
 /**
  *
  * @author mrowlie
  */
 public class Modeling implements Runnable {
-    ConcurrentLinkedQueue<Message> messageQueue = new ConcurrentLinkedQueue<Message>();
+    static ConcurrentLinkedQueue<Message> messageQueue = new ConcurrentLinkedQueue<Message>();
     
     ReentrantLock frameTimeLock = new ReentrantLock();
     ReentrantLock gameTimeLock = new ReentrantLock();
@@ -23,6 +26,7 @@ public class Modeling implements Runnable {
     float timeElpasedThisFrame = 0f;
     float timeElpasedNextFrame = 0f;
     float gameTimeElpased = 0f;
+    float serverTimeDiff = 0f;
     
     public void initialize(){
         
@@ -35,7 +39,7 @@ public class Modeling implements Runnable {
     
     public void update(){
         while(running){
-            while(!messageQueue.isEmpty()){
+            if(!messageQueue.isEmpty()){
                 handleMessage(messageQueue.remove());
             }            
             frameTimeLock.lock();
@@ -88,10 +92,31 @@ public class Modeling implements Runnable {
     }
     
     public void handleMessage(Message message){
+        if(message instanceof DiskUpdate) {
+            DiskUpdate packet = (DiskUpdate) message;
+            Disk disk = Disk.diskMap.get(packet.getDiskID());
+            disk.setPosition(packet.getX(), packet.getY());
+            disk.setVelocity(packet.getVX(), packet.getVY());
         
+        } else if(message instanceof ScoreUpdate) {
+            ScoreUpdate packet = (ScoreUpdate) message;
+            PlayerDisk player = PlayerDisk.playerMap.get(packet.getPid());
+            player.score = packet.getNewScore();
+            
+        } else if(message instanceof TimeSync) {
+            TimeSync packet = (TimeSync) message;
+            this.gameTimeLock.lock();
+            try {
+                this.gameTimeElpased = packet.getTime();
+                NetWrite.addMessage(new TimeSync(packet.getTime()));
+                
+            } finally {
+                this.gameTimeLock.unlock();
+            }
+        }
     }
     
-    public void addMessage(Message message){
+    public static void addMessage(Message message){
         messageQueue.add(message);
     }
     

@@ -5,11 +5,8 @@
  */
 package server;
 
-import com.jme3.asset.AssetManager;
-import com.jme3.font.BitmapFont;
-import com.jme3.font.BitmapText;
-import com.jme3.math.ColorRGBA;
-import com.jme3.renderer.queue.RenderQueue;
+
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *
@@ -21,12 +18,14 @@ public class PlayerDisk extends Disk{
     public int score;
     
     public int pid;
-    
     public static int playerAmount = 0;
+    public static ConcurrentHashMap<Integer, PlayerDisk> playerMap = new ConcurrentHashMap();
     
+    @SuppressWarnings("LeakingThisInConstructor")
     public PlayerDisk(int id) {
         super(Main.PLAYER_R);
         this.pid = PlayerDisk.playerAmount++;
+        PlayerDisk.playerMap.put(this.pid, this);
         score = 0;
         
     }

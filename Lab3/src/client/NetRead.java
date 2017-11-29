@@ -9,7 +9,6 @@ import com.jme3.network.Client;
 import com.jme3.network.Message;
 import com.jme3.network.MessageListener;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import networking.Packet;
 import networking.Packet.ChangeState;
 import networking.Packet.ClientReady;
 import networking.Packet.DiskUpdate;
@@ -56,8 +55,7 @@ public class NetRead implements Runnable, MessageListener<Client> {
     
     private void handlePacket(Message message) {
         if(message instanceof DiskUpdate){
-            
-            DiskUpdate packet = (DiskUpdate) message;
+            Modeling.addMessage(message);
             
         } else if(message instanceof ScoreUpdate) {
             

@@ -5,13 +5,11 @@
  */
 package server;
 
-import com.jme3.network.Filter;
 import com.jme3.network.Filters;
 import com.jme3.network.HostedConnection;
 import com.jme3.network.Message;
 import com.jme3.network.MessageListener;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import networking.Packet;
 import networking.Packet.MyAbstractMessage;
 import networking.Packet.TestPacket;
 import networking.Packet.TimeDiff;

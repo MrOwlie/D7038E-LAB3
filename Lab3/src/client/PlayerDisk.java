@@ -10,6 +10,7 @@ import com.jme3.font.BitmapFont;
 import com.jme3.font.BitmapText;
 import com.jme3.math.ColorRGBA;
 import com.jme3.renderer.queue.RenderQueue;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *
@@ -23,6 +24,11 @@ public class PlayerDisk extends Disk{
     BitmapFont font;
     BitmapText text;
     
+    public int pid;
+    public static int playerAmount;
+    public static ConcurrentHashMap<Integer, PlayerDisk> playerMap = new ConcurrentHashMap();
+    
+    @SuppressWarnings("LeakingThisInConstructor")
     public PlayerDisk(AssetManager assetManager, int id) {
         super(assetManager, ColorRGBA.Blue, Main.PLAYER_R);
         score = 0;
@@ -34,6 +40,10 @@ public class PlayerDisk extends Disk{
         text.setQueueBucket(RenderQueue.Bucket.Transparent);
         this.diskNode.attachChild(text);
         text.setLocalTranslation(- text.getHeight() / 2, text.getHeight() / 2, Main.FRAME_THICKNESS + 1f);
+        
+        this.pid = PlayerDisk.playerAmount++;
+        PlayerDisk.playerMap.put(this.pid, this);
+        
     }
     
     public void addScore(int amount) {
