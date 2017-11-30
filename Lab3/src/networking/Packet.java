@@ -167,16 +167,22 @@ public class Packet {
     @Serializable
     public static class InitClient extends MyAbstractMessage{
         int diskID;
+        int startPos;
         public InitClient(){
             
         }
         
-        public InitClient(int diskID){
+        public InitClient(int diskID, int startPos){
             this.diskID = diskID;
+            this.startPos = startPos;
         }
         
         public int getDiskID() {
             return this.diskID;
+        }
+        
+        public int getStartPos() {
+            return this.startPos;
         }
     }
     

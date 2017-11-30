@@ -46,8 +46,8 @@ public class NetWrite implements Runnable {
                     Filters.in(player.conn)));
     }
     
-    public static void initClient(int diskID, Filter filter) {
-        messageQueue.add(new MessageFilterPair(new InitClient(diskID), filter));
+    public static void initClient(int diskID, int startPos, Filter filter) {
+        messageQueue.add(new MessageFilterPair(new InitClient(diskID, startPos), filter));
     }
     
     public static void clientReady(int diskID, Filter filter) {
