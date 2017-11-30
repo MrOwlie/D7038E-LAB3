@@ -169,7 +169,7 @@ public class Packet {
             return this.startPos;
         }
     }
-    
+    @Serializable
     public static class JoiningClient extends MyAbstractMessage {
         int diskID;
         int startPos;
