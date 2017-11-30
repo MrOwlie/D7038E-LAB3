@@ -131,7 +131,12 @@ public class NetRead implements Runnable, MessageListener<HostedConnection>, Con
         //inform other clients
         NetWrite.joiningClient(player1.diskID, PlayerDisk.playerPos.indexOf(player1.pos), Filters.notIn(conn));
         NetWrite.joiningClient(player2.diskID, PlayerDisk.playerPos.indexOf(player2.pos), Filters.notIn(conn));
-        
+        //inform connector of other clients
+        for(PlayerDisk player : PlayerDisk.playerDisks) {
+            if(player != player1 && player != player2) {
+                NetWrite.joiningClient(player.diskID, PlayerDisk.playerPos.indexOf(player.pos), Filters.in(player1.conn, player2.conn));
+            }
+        }
         
         
     }

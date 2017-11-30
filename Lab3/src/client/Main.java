@@ -20,7 +20,7 @@ import networking.Packet.*;
 public class Main extends SimpleApplication {
     //constants
     public static final String NAME = "MultiDisk";
-    public static final String DEFAULT_SERVER = "mrowlie.asuscomm.comSSS";
+    public static final String DEFAULT_SERVER = "mrowlie.asuscomm.com";
     public static final int PORT = 2000;
     public static final int VERSION = 1;
     
