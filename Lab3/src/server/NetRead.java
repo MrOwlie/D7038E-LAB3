@@ -14,6 +14,8 @@ import com.jme3.network.Server;
 import java.util.Enumeration;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import networking.Packet.ClientReady;
+import networking.Packet.InputPressed;
+import networking.Packet.InputReleased;
 import networking.Packet.MyAbstractMessage;
 import networking.Packet.TimeDiff;
 import networking.Packet.TimeSync;
@@ -42,7 +44,7 @@ public class NetRead implements Runnable, MessageListener<HostedConnection>, Con
     
     private void update() {
         while(!this.exit) {
-            if(!messageQueue.isEmpty()){
+            if(!messageQueue.isEmpty()) {
                 System.out.println("Message recived");
                 MessageConnectionPair pair = NetRead.messageQueue.remove();
                 MyAbstractMessage m = (MyAbstractMessage) pair.m;
@@ -59,6 +61,23 @@ public class NetRead implements Runnable, MessageListener<HostedConnection>, Con
                         player.ready = true;
                         
                     }
+                }
+                if(m instanceof InputPressed) {
+                    InputPressed p = (InputPressed) m;
+                    Disk disk = Disk.diskMap.get(p.getDiskID());
+                    if(disk instanceof PlayerDisk) {
+                        PlayerDisk player = (PlayerDisk) disk;
+                        player.keyPressed[p.getKey()] = true;
+                    }
+                }
+                if(m instanceof InputReleased) {
+                    InputReleased p = (InputReleased) m;
+                    Disk disk = Disk.diskMap.get(p.getDiskID());
+                    if(disk instanceof PlayerDisk) {
+                        PlayerDisk player = (PlayerDisk) disk;
+                        player.keyPressed[p.getKey()] = false;
+                    }
+                    
                 }
                 
             }
