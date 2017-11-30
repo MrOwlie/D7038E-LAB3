@@ -13,6 +13,7 @@ import com.jme3.network.MessageListener;
 import com.jme3.network.Server;
 import java.util.Enumeration;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import networking.Packet.ClientReady;
 import networking.Packet.MyAbstractMessage;
 import networking.Packet.TestPacket;
 import networking.Packet.TimeDiff;
@@ -45,14 +46,19 @@ public class NetRead implements Runnable, MessageListener<HostedConnection>, Con
             if(!messageQueue.isEmpty()){
                 MessageConnectionPair pair = NetRead.messageQueue.remove();
                 MyAbstractMessage m = (MyAbstractMessage) pair.m;
-                if(m instanceof TestPacket) {
-                    TestPacket p = (TestPacket) m;
-                    System.out.println(p.getMessage());
-                }
                 if(m instanceof TimeSync) {
                     TimeSync p = (TimeSync) m;
                     float diff = (Main.timeElapsed - p.getTime()) / 2;
                     NetWrite.sendTimeDiff(diff, Filters.in(pair.c));
+                }
+                if(m instanceof ClientReady) {
+                    ClientReady p = (ClientReady) m;
+                    Disk disk = Disk.diskMap.get(p.getDiskID());
+                    if (disk instanceof PlayerDisk) {
+                        PlayerDisk player = (PlayerDisk) disk;
+                        player.ready = true;
+                        
+                    }
                 }
                 
             }

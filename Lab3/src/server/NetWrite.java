@@ -9,6 +9,7 @@ import com.jme3.network.Filter;
 import com.jme3.network.Filters;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import networking.Packet.ChangeState;
+import networking.Packet.ClientReady;
 import networking.Packet.DisconnectClient;
 import networking.Packet.DiskUpdate;
 import networking.Packet.InitClient;
@@ -47,6 +48,10 @@ public class NetWrite implements Runnable {
     
     public static void initClient(int diskID, Filter filter) {
         messageQueue.add(new MessageFilterPair(new InitClient(diskID), filter));
+    }
+    
+    public static void clientReady(int diskID, Filter filter) {
+        messageQueue.add(new MessageFilterPair(new ClientReady(diskID), filter));
     }
     
     public static void disconnectClient(int diskID, Filter filter) {

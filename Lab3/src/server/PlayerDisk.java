@@ -7,6 +7,7 @@ package server;
 
 
 import com.jme3.network.HostedConnection;
+import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -21,6 +22,10 @@ public class PlayerDisk extends Disk{
     public static int playerAmount = 0;
     public HostedConnection conn;
     
+    public boolean ready = false;
+    
+    public static ArrayList<PlayerDisk> playerDisks;
+    
     public boolean[] keyPressed = new boolean[4];
     
     @SuppressWarnings("LeakingThisInConstructor")
@@ -28,6 +33,7 @@ public class PlayerDisk extends Disk{
         super(Main.PLAYER_R);
         this.conn = conn;
         score = 0;
+        PlayerDisk.playerDisks.add(this);
         
     }
     

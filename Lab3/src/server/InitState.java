@@ -9,7 +9,6 @@ import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.math.Vector2f;
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  *
@@ -20,7 +19,22 @@ public class InitState extends BaseAppState{
 
     @Override
     public void update(float tpf) {
-        
+        boolean playersReady = true;
+        for(PlayerDisk player: PlayerDisk.playerDisks) {
+            if(!player.ready) {
+                playersReady = false;
+                break;
+            }
+        }
+        if(playersReady){
+            startGame();
+        }
+    }
+    
+    private void startGame() {
+        NetWrite.changeState((byte) 0);
+        Modeling.stateManager.getState(GameState.class).setEnabled(true);
+        Modeling.stateManager.getState(InitState.class).setEnabled(false);
     }
     
     @Override
@@ -87,7 +101,6 @@ public class InitState extends BaseAppState{
         playerPos.add(new Vector2f(0, -Main.PLAYER_COORD));
         playerPos.add(new Vector2f(Main.PLAYER_COORD, -Main.PLAYER_COORD));
         
-        // PLAYERS
         
     }
     

@@ -15,7 +15,7 @@ public class Modeling implements Runnable {
 
     boolean exit = false;
     
-    AppStateManager stateManager;
+    static AppStateManager stateManager;
     
     static InitState initState;
     static GameState gameState;
@@ -30,7 +30,7 @@ public class Modeling implements Runnable {
         gameState.setEnabled(false);
         endState.setEnabled(false);
         
-        this.stateManager = new AppStateManager(Main.app);
+        Modeling.stateManager = new AppStateManager(Main.app);
         
         
         
