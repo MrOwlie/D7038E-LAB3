@@ -34,7 +34,20 @@ public class GameState extends BaseAppState {
 
     @Override
     protected void onEnable() {
-        
+        System.out.println("Enabled");
+        for(Disk d : Disk.disks){
+            if(d.getClass() == PositiveDisk.class) {
+                PositiveDisk pd = (PositiveDisk) d;
+                pd.randomizeVelocity();
+            }
+            else if(d.getClass() == NegativeDisk.class) {
+                NegativeDisk nd = (NegativeDisk) d;
+                nd.randomizeVelocity();
+            } else {
+                continue;
+            }
+            NetWrite.updateDisk(d.diskID, d.pos.x, d.pos.y, d.getVelocity().x, d.getVelocity().y);
+        }
     }
 
     @Override

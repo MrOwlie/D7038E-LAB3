@@ -54,7 +54,7 @@ public class Main extends SimpleApplication {
     
     Thread netReadThread;
     Thread netWriteThread;
-    Thread modelingThread;
+    Thread inputThread;
     
     //test
     float timeElapsed = 0;
@@ -111,11 +111,11 @@ public class Main extends SimpleApplication {
             
             netWriteThread = new Thread(new NetWrite(myClient));
             netReadThread = new Thread(netRead);
-            modelingThread = new Thread(model);
+            inputThread =  new Thread(new Input());
             
             netWriteThread.start();
             netReadThread.start();
-            modelingThread.start();
+            inputThread.start();
         }
         catch(Exception e){
             System.out.println("ERROR CONNECTING");

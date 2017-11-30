@@ -48,9 +48,8 @@ public abstract class Disk {
     @SuppressWarnings("LeakingThisInConstructor")
     public Disk(AssetManager assetManager, ColorRGBA color, float radius, int diskID) {
         
-            
             this.radius = radius;
-        
+            
             this.pos = new Vector2f();
             
             diskNode = new Node();

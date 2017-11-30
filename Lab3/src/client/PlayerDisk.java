@@ -21,6 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PlayerDisk extends Disk{
     static ArrayList<Vector2f> playerPos = new ArrayList();
     
+    
     int score;
     
     BitmapFont font;
@@ -32,16 +33,28 @@ public class PlayerDisk extends Disk{
     @SuppressWarnings("LeakingThisInConstructor")
     public PlayerDisk(AssetManager assetManager, int id, int posIndex) {
         super(assetManager, ColorRGBA.Blue, Main.PLAYER_R, id);
+        System.out.println("Player id : "+id);
+        if(playerPos.isEmpty()){
+            PlayerDisk.playerPos.add(new Vector2f(-Main.PLAYER_COORD, Main.PLAYER_COORD));
+            PlayerDisk.playerPos.add(new Vector2f(0, Main.PLAYER_COORD));
+            PlayerDisk.playerPos.add(new Vector2f(Main.PLAYER_COORD, Main.PLAYER_COORD));
+            PlayerDisk.playerPos.add(new Vector2f(-Main.PLAYER_COORD, 0));
+            PlayerDisk.playerPos.add(new Vector2f(0, 0));
+            PlayerDisk.playerPos.add(new Vector2f(Main.PLAYER_COORD, 0));
+            PlayerDisk.playerPos.add(new Vector2f(-Main.PLAYER_COORD, -Main.PLAYER_COORD));
+            PlayerDisk.playerPos.add(new Vector2f(0, -Main.PLAYER_COORD));
+        }
+        
         score = 0;
         font = assetManager.loadFont("Interface/Fonts/Console.fnt");
         text = new BitmapText(font, false);
         text.setSize(26);
-        text.setColor(ColorRGBA.Black);
+        text.setColor(ColorRGBA.White);
         text.setText("p" + id);
         text.setQueueBucket(RenderQueue.Bucket.Transparent);
         this.diskNode.attachChild(text);
         text.setLocalTranslation(- text.getHeight() / 2, text.getHeight() / 2, Main.FRAME_THICKNESS + 1f);
-        
+        setPosition(playerPos.get(posIndex));
         PlayerDisk.playerMap.put(id, this);
         
         

@@ -26,13 +26,14 @@ public class InitState extends BaseAppState{
                 break;
             }
         }
+        if(PlayerDisk.playerDisks.isEmpty()) playersReady = false;
         if(playersReady){
             startGame();
         }
     }
     
     private void startGame() {
-        NetWrite.changeState((byte) 0);
+        NetWrite.changeState((byte) 1);
         Modeling.stateManager.getState(GameState.class).setEnabled(true);
         Modeling.stateManager.getState(InitState.class).setEnabled(false);
     }
@@ -75,19 +76,7 @@ public class InitState extends BaseAppState{
         NegativeDisk nd6 = new NegativeDisk( Main.POSNEG_BETWEEN_COORD, - Main.POSNEG_MAX_COORD);
         NegativeDisk nd7 = new NegativeDisk( - Main.POSNEG_BETWEEN_COORD, - Main.POSNEG_MAX_COORD);
         
-        for(Disk d : Disk.disks){
-            if(d.getClass() == PositiveDisk.class) {
-                PositiveDisk pd = (PositiveDisk) d;
-                pd.randomizeVelocity();
-            }
-            if(d.getClass() == NegativeDisk.class) {
-                NegativeDisk nd = (NegativeDisk) d;
-                nd.randomizeVelocity();
-            } else {
-                break;
-            }
-            Main.server.netWrite.updateDisk(d.diskID, d.pos.x, d.pos.y, d.getVelocity().x, d.getVelocity().y);
-        }
+        
         
         ArrayList<Vector2f> playerPos = new ArrayList();
         

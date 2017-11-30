@@ -43,6 +43,7 @@ public class NetRead implements Runnable, MessageListener<HostedConnection>, Con
     private void update() {
         while(!this.exit) {
             if(!messageQueue.isEmpty()){
+                System.out.println("Message recived");
                 MessageConnectionPair pair = NetRead.messageQueue.remove();
                 MyAbstractMessage m = (MyAbstractMessage) pair.m;
                 if(m instanceof TimeSync) {

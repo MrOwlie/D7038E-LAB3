@@ -36,6 +36,7 @@ public class NetWrite implements Runnable {
     }
     
     public static void updateDisk(int pid, float x, float y, float vx, float vy){
+        System.out.println("update disk");
         messageQueue.add(new MessageFilterPair(new DiskUpdate(pid, x, y, vx, vy), null));
     }
     
@@ -90,6 +91,7 @@ public class NetWrite implements Runnable {
     private void update() {
         while(!exit){
             if(!messageQueue.isEmpty()){
+                System.out.println("Message sent");
                 MessageFilterPair pair = messageQueue.remove();
                 if (pair.filter == null) {
                     server.server.broadcast(pair.message);

@@ -19,8 +19,7 @@ public class GameState extends BaseAppState {
     
     @Override
     public void update(float tpf) {
-        Main.model.updateFrameTime(tpf);
-        Main.model.updateGameTime(tpf);
+        Main.model.update(tpf);
     }
     @Override
     protected void initialize(Application app) {
@@ -44,8 +43,10 @@ public class GameState extends BaseAppState {
         Main.refInputManager.addMapping("p2Left", new KeyTrigger(KeyInput.KEY_J));
         Main.refInputManager.addMapping("p2Right", new KeyTrigger(KeyInput.KEY_L));
         
+        Main.refInputManager.addMapping("Debug", new KeyTrigger(KeyInput.KEY_M));
+        
         Main.refInputManager.addListener(actionListener, "p1Up", "p1Down", "p1Left", "p1Right",
-                                                         "p2UP", "p2Down", "p2Left", "p2Right");
+                                                         "p2UP", "p2Down", "p2Left", "p2Right", "Debug");
         
     }
 

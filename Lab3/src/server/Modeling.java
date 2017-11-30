@@ -26,12 +26,15 @@ public class Modeling implements Runnable {
         Modeling.gameState = new GameState();
         Modeling.endState = new EndState();
         
+        stateManager = Main.app.getStateManager();
+        
+        stateManager.attach(initState);
+        stateManager.attach(gameState);
+        stateManager.attach(endState);
+        
         initState.setEnabled(true);
         gameState.setEnabled(false);
         endState.setEnabled(false);
-        
-        Modeling.stateManager = new AppStateManager(Main.app);
-        
         
         
     }
@@ -48,7 +51,9 @@ public class Modeling implements Runnable {
     
     @Override
     public void run() {
-        
+        initialize();
+        update();
+        destroy();
     }
     
 }

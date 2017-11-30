@@ -18,15 +18,12 @@ import networking.Packet.TimeDiff;
  *
  * @author mrowlie
  */
-public class Modeling implements Runnable {
+public class Modeling{
     static ConcurrentLinkedQueue<Message> messageQueue = new ConcurrentLinkedQueue<Message>();
     
-    ReentrantLock frameTimeLock = new ReentrantLock();
     ReentrantLock gameTimeLock = new ReentrantLock();
     Boolean running = true;
     
-    float timeElpasedThisFrame = 0f;
-    float timeElpasedNextFrame = 0f;
     float gameTimeElpased = 0f;
     float serverTimeDiff = 0f;    
     
@@ -34,52 +31,14 @@ public class Modeling implements Runnable {
         
     }
     
-    @Override
-    public void run() {
-        update();
-    }
-    
-    public void update(){
-        while(running){
-            if(!messageQueue.isEmpty()){
-                handleMessage(messageQueue.remove());
-            }            
-            frameTimeLock.lock();
-            try{
-                timeElpasedThisFrame = timeElpasedNextFrame;
-                timeElpasedNextFrame = 0f;
-            }
-            finally{
-                frameTimeLock.unlock();
-            }
-            if(timeElpasedThisFrame != 0f){
-                for(Disk d : Disk.disks){
-                    d.tick(timeElpasedThisFrame);
-                }
-            }
-        }     
+    public void update(float tpf){
+        if(!messageQueue.isEmpty()){
+            handleMessage(messageQueue.remove());
+        }            
+        for(Disk d : Disk.disks){
+            d.tick(tpf);
+        }  
         
-    }
-    
-    public void updateFrameTime(float tpf){
-        frameTimeLock.lock();
-        try{
-            timeElpasedNextFrame += tpf;
-        }
-        finally{
-            frameTimeLock.unlock();
-        }
-    }
-    
-    public void updateGameTime(float tpf){
-        gameTimeLock.lock();
-        try{
-            gameTimeElpased += tpf;
-        }
-        
-        finally{
-            gameTimeLock.unlock();
-        }
     }
     
     private void setGameTime(float gameTime){
@@ -123,7 +82,7 @@ public class Modeling implements Runnable {
         } else if(message instanceof TimeDiff){
             TimeDiff packet = (TimeDiff)message;
             serverTimeDiff = packet.getDiff();
-        }
+        } 
         
     }
     

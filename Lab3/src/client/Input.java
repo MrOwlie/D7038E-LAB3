@@ -82,6 +82,9 @@ public class Input implements Runnable {
                         NetWrite.addMessage(new ClientReady(localPlayers[1].diskID));
                     }
                     break;
+                case "Debug":
+                    System.out.println("Player 1 : "+localPlayers[0].pos+"\nPlayer 2  : "+localPlayers[1].pos);
+                    break;
             }
         }
         
@@ -111,8 +114,7 @@ public class Input implements Runnable {
         
     }
     
-    public static void addPlayer(Packet.InitClient initMessage){
-        PlayerDisk player = new PlayerDisk(Main.refAssetManager, initMessage.getDiskID(), initMessage.getStartPos());
+    public static void addPlayer(PlayerDisk player){
         if(localPlayers[0] == null) localPlayers[0] = player;
         else if(localPlayers[1] == null) localPlayers[1] = player;
         else System.out.println("Error! /nTwo local players already exist");    

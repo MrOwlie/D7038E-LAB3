@@ -54,7 +54,6 @@ public class NetRead implements Runnable, MessageListener<Client> {
     
     private void handlePacket(Message message) {
         if(message instanceof DiskUpdate){
-            
             Modeling.addMessage(message);
             
         } else if(message instanceof ScoreUpdate) {
@@ -71,6 +70,7 @@ public class NetRead implements Runnable, MessageListener<Client> {
             
         } else if(message instanceof ChangeState) {
             ChangeState packet = (ChangeState)message;
+            System.out.println("State : "+packet.getState());
             switch(packet.getState()){
                 case 0:
                     Main.gameState.setEnabled(false);
@@ -90,7 +90,7 @@ public class NetRead implements Runnable, MessageListener<Client> {
             } 
             
         } else if (message instanceof InitClient){
-            Input.addPlayer((InitClient)message);    
+            InitState.addMessage(message);
         } 
         
         
