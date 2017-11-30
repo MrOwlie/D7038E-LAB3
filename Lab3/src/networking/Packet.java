@@ -170,6 +170,28 @@ public class Packet {
         }
     }
     
+    public static class JoiningClient extends MyAbstractMessage {
+        int diskID;
+        int startPos;
+        
+        public JoiningClient() {
+            
+        }
+        
+        public JoiningClient(int diskID, int startPos) {
+            this.diskID = diskID;
+            this.startPos = startPos;
+        }
+        
+        public int getDiskID() {
+            return this.diskID;
+        }
+        
+        public int getStartPos() {
+            return this.startPos;
+        }
+    }
+    
     @Serializable
     public static class DisconnectClient extends MyAbstractMessage {
         int diskID;

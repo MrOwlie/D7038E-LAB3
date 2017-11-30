@@ -13,6 +13,7 @@ import com.jme3.input.controls.KeyTrigger;
 import com.jme3.network.Message;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import networking.Packet.InitClient;
+import networking.Packet.JoiningClient;
 
 /**
  *
@@ -74,10 +75,14 @@ public class InitState extends BaseAppState{
         messageQueue.add(message);
     }
     
+    
     public void handleMessage(Message message){
         if(message instanceof InitClient){
             InitClient packet = (InitClient)message;
             Input.addPlayer(new PlayerDisk(Main.refAssetManager, packet.getDiskID(), packet.getStartPos()));
+        } else if(message instanceof JoiningClient) {
+            JoiningClient packet = (JoiningClient) message;
+            new PlayerDisk(Main.refAssetManager, packet.getDiskID(), packet.getStartPos());
         }
     }
     

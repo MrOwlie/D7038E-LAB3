@@ -37,6 +37,7 @@ public class GameServer {
         Serializer.registerClass(networking.Packet.ChangeState.class);
         Serializer.registerClass(networking.Packet.ClientReady.class);
         Serializer.registerClass(networking.Packet.InitClient.class);
+        Serializer.registerClass(networking.Packet.JoiningClient.class);
         Serializer.registerClass(networking.Packet.DisconnectClient.class);
         Serializer.registerClass(networking.Packet.InputPressed.class);
         Serializer.registerClass(networking.Packet.InputReleased.class);

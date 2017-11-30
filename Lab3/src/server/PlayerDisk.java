@@ -27,6 +27,7 @@ public class PlayerDisk extends Disk{
     
     public static ArrayList<PlayerDisk> playerDisks = new ArrayList();
     public static ArrayList<Vector2f> playerPos = new ArrayList();
+    public static boolean[] busyPos = new boolean[8];
     
     public boolean[] keyPressed = new boolean[4];
     
@@ -35,20 +36,25 @@ public class PlayerDisk extends Disk{
         super(Main.PLAYER_R);
         this.conn = conn;
         score = 0;
-        
-        if(playerPos.isEmpty()){
-            PlayerDisk.playerPos.add(new Vector2f(-Main.PLAYER_COORD, Main.PLAYER_COORD));
-            PlayerDisk.playerPos.add(new Vector2f(0, Main.PLAYER_COORD));
-            PlayerDisk.playerPos.add(new Vector2f(Main.PLAYER_COORD, Main.PLAYER_COORD));
-            PlayerDisk.playerPos.add(new Vector2f(-Main.PLAYER_COORD, 0));
-            PlayerDisk.playerPos.add(new Vector2f(0, 0));
-            PlayerDisk.playerPos.add(new Vector2f(Main.PLAYER_COORD, 0));
-            PlayerDisk.playerPos.add(new Vector2f(-Main.PLAYER_COORD, -Main.PLAYER_COORD));
-            PlayerDisk.playerPos.add(new Vector2f(0, -Main.PLAYER_COORD));
+        if(playerPos.isEmpty()) {
+            PlayerDisk.resetPosArray();
         }
         
         PlayerDisk.playerDisks.add(this);
         
+    }
+    
+    public static void resetPosArray() {
+        PlayerDisk.playerPos.clear();
+        
+        PlayerDisk.playerPos.add(new Vector2f(-Main.PLAYER_COORD, Main.PLAYER_COORD));
+        PlayerDisk.playerPos.add(new Vector2f(0, Main.PLAYER_COORD));
+        PlayerDisk.playerPos.add(new Vector2f(Main.PLAYER_COORD, Main.PLAYER_COORD));
+        PlayerDisk.playerPos.add(new Vector2f(-Main.PLAYER_COORD, 0));
+        PlayerDisk.playerPos.add(new Vector2f(0, 0));
+        PlayerDisk.playerPos.add(new Vector2f(Main.PLAYER_COORD, 0));
+        PlayerDisk.playerPos.add(new Vector2f(-Main.PLAYER_COORD, -Main.PLAYER_COORD));
+        PlayerDisk.playerPos.add(new Vector2f(0, -Main.PLAYER_COORD));
     }
     
     @Override

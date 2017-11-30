@@ -12,6 +12,7 @@ import com.jme3.network.Message;
 import com.jme3.network.MessageListener;
 import com.jme3.network.Server;
 import java.util.Enumeration;
+import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import networking.Packet.ClientReady;
 import networking.Packet.InputPressed;
@@ -104,11 +105,34 @@ public class NetRead implements Runnable, MessageListener<HostedConnection>, Con
     public void connectionAdded(Server server, HostedConnection conn) {
         PlayerDisk player1 = new PlayerDisk(conn);
         PlayerDisk player2 = new PlayerDisk(conn);
-        player1.setPosition(PlayerDisk.playerPos.get(0));
-        player2.setPosition(PlayerDisk.playerPos.get(1));
-        NetWrite.initClient(player1.diskID, 0, Filters.in(conn));
-        NetWrite.initClient(player2.diskID, 1, Filters.in(conn));
+        
         NetWrite.syncTime(Filters.in(conn));
+        
+        Random rand = new Random();
+        
+        int random = rand.nextInt(PlayerDisk.busyPos.length);
+        while(PlayerDisk.busyPos[random]){
+            random = rand.nextInt(PlayerDisk.busyPos.length);
+            
+        }
+        PlayerDisk.busyPos[random] = true;
+        player1.setPosition(PlayerDisk.playerPos.get(random));
+        NetWrite.initClient(player1.diskID, random, Filters.in(conn));
+        
+        random = rand.nextInt(PlayerDisk.busyPos.length);
+        while(PlayerDisk.busyPos[random]){
+            random = rand.nextInt(PlayerDisk.busyPos.length);
+            
+        }
+        PlayerDisk.busyPos[random] = true;
+        player2.setPosition(PlayerDisk.playerPos.get(random));
+        NetWrite.initClient(player2.diskID, random, Filters.in(conn));
+        
+        //inform other clients
+        NetWrite.joiningClient(player1.diskID, PlayerDisk.playerPos.indexOf(player1.pos), Filters.notIn(conn));
+        NetWrite.joiningClient(player2.diskID, PlayerDisk.playerPos.indexOf(player2.pos), Filters.notIn(conn));
+        
+        
         
     }
 

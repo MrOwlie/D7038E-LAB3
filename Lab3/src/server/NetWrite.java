@@ -13,6 +13,7 @@ import networking.Packet.ClientReady;
 import networking.Packet.DisconnectClient;
 import networking.Packet.DiskUpdate;
 import networking.Packet.InitClient;
+import networking.Packet.JoiningClient;
 import networking.Packet.MyAbstractMessage;
 import networking.Packet.ScoreUpdate;
 import networking.Packet.TimeDiff;
@@ -48,6 +49,10 @@ public class NetWrite implements Runnable {
     
     public static void initClient(int diskID, int startPos, Filter filter) {
         messageQueue.add(new MessageFilterPair(new InitClient(diskID, startPos), filter));
+    }
+    
+    public static void joiningClient(int diskID, int startPos, Filter filter) {
+        messageQueue.add(new MessageFilterPair(new JoiningClient(diskID, startPos), filter));
     }
     
     public static void clientReady(int diskID, Filter filter) {

@@ -12,6 +12,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import networking.Packet.ChangeState;
 import networking.Packet.DiskUpdate;
 import networking.Packet.InitClient;
+import networking.Packet.JoiningClient;
 import networking.Packet.ScoreUpdate;
 import networking.Packet.TimeDiff;
 import networking.Packet.TimeSync;
@@ -91,7 +92,9 @@ public class NetRead implements Runnable, MessageListener<Client> {
             
         } else if (message instanceof InitClient){
             InitState.addMessage(message);
-        } 
+        } else if (message instanceof JoiningClient){
+            InitState.addMessage(message);
+        }
         
         
     }
