@@ -7,7 +7,6 @@ package client;
 
 import com.jme3.network.Message;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.locks.ReentrantLock;
 import networking.Packet.DiskUpdate;
 import networking.Packet.ScoreUpdate;
 import networking.Packet.TimeSync;
@@ -21,11 +20,11 @@ import networking.Packet.TimeDiff;
 public class Modeling{
     static ConcurrentLinkedQueue<Message> messageQueue = new ConcurrentLinkedQueue<Message>();
     
-    ReentrantLock gameTimeLock = new ReentrantLock();
     Boolean running = true;
     
-    float gameTimeElpased = 0f;
-    float serverTimeDiff = 0f;    
+    float gameTimeElapsed = 0f;
+    float serverTimeDiff = 0f;
+    
     
     public void initialize(){
         
@@ -37,19 +36,7 @@ public class Modeling{
         }            
         for(Disk d : Disk.disks){
             d.tick(tpf);
-        }  
-        
-    }
-    
-    private void setGameTime(float gameTime){
-        gameTimeLock.lock();
-        try{
-            gameTimeElpased = gameTime;
-        }
-        
-        finally{
-            gameTimeLock.unlock();
-        }
+        }        
     }
     
     public void handleMessage(Message message){
@@ -66,15 +53,9 @@ public class Modeling{
             
         } else if(message instanceof TimeSync) {
             TimeSync packet = (TimeSync) message;
-            this.gameTimeLock.lock();
-            try {
-                this.gameTimeElpased = packet.getTime();
-                NetWrite.addMessage(new TimeSync(packet.getTime()));
-                
-            } finally {
-                this.gameTimeLock.unlock();
-            }
-            
+            this.gameTimeElapsed = packet.getTime();
+            NetWrite.addMessage(new TimeSync(packet.getTime()));
+                        
         } else if(message instanceof DisconnectClient){
             DisconnectClient packet = (DisconnectClient)message;
             Disk.diskMap.remove(packet.getDiskID());
@@ -82,10 +63,14 @@ public class Modeling{
         } else if(message instanceof TimeDiff){
             TimeDiff packet = (TimeDiff)message;
             serverTimeDiff = packet.getDiff();
-        } 
-        
+        }       
     }
     
+    public void startTimer(){
+        gameTimeElapsed = serverTimeDiff;   
+    }
+    
+
     public static void addMessage(Message message){
         messageQueue.add(message);
     }

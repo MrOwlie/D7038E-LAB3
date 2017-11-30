@@ -20,7 +20,7 @@ import networking.Packet.*;
 public class Main extends SimpleApplication {
     //constants
     public static final String NAME = "MultiDisk";
-    public static final String DEFAULT_SERVER = "localhost";
+    public static final String DEFAULT_SERVER = "mrowlie.asuscomm.comSSS";
     public static final int PORT = 2000;
     public static final int VERSION = 1;
     
@@ -78,7 +78,8 @@ public class Main extends SimpleApplication {
         Serializer.registerClass(InitClient.class);
         Serializer.registerClass(DisconnectClient.class);
         Serializer.registerClass(InputPressed.class);
-        Serializer.registerClass(InputReleased.class);      
+        Serializer.registerClass(InputReleased.class);
+        Serializer.registerClass(JoiningClient.class);
         //Set references
         refAssetManager = assetManager;
         refInputManager = inputManager;
