@@ -12,6 +12,7 @@ import networking.Packet.DiskUpdate;
 import networking.Packet.InitClient;
 import networking.Packet.ScoreUpdate;
 import networking.Packet.TimeSync;
+import networking.Packet.DisconnectClient;
 
 /**
  *
@@ -114,6 +115,10 @@ public class Modeling implements Runnable {
             } finally {
                 this.gameTimeLock.unlock();
             }
+            
+        } else if(message instanceof DisconnectClient){
+            DisconnectClient packet = (DisconnectClient)message;
+            Disk.diskMap.remove(packet.getDiskID());
         }
         
     }

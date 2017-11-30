@@ -7,6 +7,7 @@ import com.jme3.network.Client;
 import com.jme3.network.Network;
 import com.jme3.network.serializing.Serializer;
 import com.jme3.renderer.RenderManager;
+import com.jme3.scene.Node;
 import networking.Packet.TestPacket;
 
 /**
@@ -43,6 +44,7 @@ public class Main extends SimpleApplication {
     static Modeling model;
     static AssetManager refAssetManager;
     static InputManager refInputManager;
+    static Node refRootNode;
     
     static GameState gameState;
     static InitState initState;
@@ -66,10 +68,23 @@ public class Main extends SimpleApplication {
     public void simpleInitApp() {        
         //Register packets
         Serializer.registerClass(TestPacket.class);
+        //Set references
         refAssetManager = assetManager;
         refInputManager = inputManager;
-        //Start client
+        refRootNode = rootNode;
+        //create and set states
+        gameState = new GameState();
+        initState =  new InitState();
+        endState =  new EndState();
         
+        stateManager.attach(gameState);
+        stateManager.attach(initState);
+        stateManager.attach(endState);
+        
+        gameState.setEnabled(false);
+        initState.setEnabled(true);
+        endState.setEnabled(false);     
+        //Start client
         try{
             
             model = new Modeling();
@@ -90,7 +105,7 @@ public class Main extends SimpleApplication {
             System.out.println("ERROR CONNECTING");
             System.out.println(e.getMessage());
         }
-        
+        System.out.println("hey");
         
     }
 

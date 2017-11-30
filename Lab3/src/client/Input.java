@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import networking.Packet;
 import networking.Packet.InputPressed;
 import networking.Packet.InputReleased;
+import networking.Packet.ClientReady;
 
 /**
  *
@@ -76,6 +77,10 @@ public class Input implements Runnable {
                     break;
                 //Ready
                 case "Ready":
+                    if(input.isPressed){
+                        NetWrite.addMessage(new ClientReady(localPlayers[0].diskID));
+                        NetWrite.addMessage(new ClientReady(localPlayers[1].diskID));
+                    }
                     break;
             }
         }

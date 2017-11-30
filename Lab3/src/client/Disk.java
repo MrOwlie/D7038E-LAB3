@@ -62,6 +62,7 @@ public abstract class Disk {
             diskGeom.setMaterial(diskMat);
             
             this.diskNode.attachChild(diskGeom);
+            Main.refRootNode.attachChild(diskNode);
             
             this.v = new Vector2f(0, 0);
             

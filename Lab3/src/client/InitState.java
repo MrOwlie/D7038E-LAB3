@@ -23,7 +23,7 @@ public class InitState extends BaseAppState{
     
     @Override
     protected void initialize(Application game) {
-        initDisks();    
+        initDisks();
     }
 
     @Override
