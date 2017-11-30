@@ -23,7 +23,7 @@ public class Modeling{
     Boolean running = true;
     
     float gameTimeElapsed = 0f;
-    float serverTimeDiff = 0f;
+    static float serverTimeDiff = 0f;
     
     
     public void initialize(){

@@ -122,23 +122,28 @@ public abstract class Disk {
                         PlayerDisk playerDisk = (PlayerDisk) this;
                         PositiveDisk posDisk = (PositiveDisk) d;
                         playerDisk.addScore(posDisk.worth);
+                        NetWrite.updateScore(playerDisk.diskID, playerDisk.score);
                         posDisk.subWorth();
+                        NetWrite.updatePosDisk(posDisk.diskID);
                         
                     } else if (this.getClass() == PositiveDisk.class && (d.getClass() == PlayerDisk.class)) {
                         PlayerDisk playerDisk = (PlayerDisk) d;
                         PositiveDisk posDisk = (PositiveDisk) this;
                         playerDisk.addScore(posDisk.worth);
+                        NetWrite.updateScore(playerDisk.diskID, playerDisk.score);
                         posDisk.subWorth();
+                        NetWrite.updatePosDisk(posDisk.diskID);
                     } else if ((this.getClass() == PlayerDisk.class) && (d.getClass() == NegativeDisk.class)) {
                         PlayerDisk playerDisk = (PlayerDisk) this;
                         NegativeDisk negDisk = (NegativeDisk) d;
                         playerDisk.removeScore(3);
+                        NetWrite.updateScore(playerDisk.diskID, playerDisk.score);
 
                     } else if (this.getClass() == NegativeDisk.class && (d.getClass() == PlayerDisk.class)) {
                         PlayerDisk playerDisk = (PlayerDisk) d;
                         NegativeDisk negDisk = (NegativeDisk) this;
                         playerDisk.removeScore(3);
-                        
+                        NetWrite.updateScore(playerDisk.diskID, playerDisk.score);
                         
                     }
                     Disk.diskCollision(tpf, this, d);

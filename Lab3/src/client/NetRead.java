@@ -16,6 +16,7 @@ import networking.Packet.JoiningClient;
 import networking.Packet.ScoreUpdate;
 import networking.Packet.TimeDiff;
 import networking.Packet.TimeSync;
+import networking.Packet.UpdatePosDisk;
 
 /**
  *
@@ -92,8 +93,12 @@ public class NetRead implements Runnable, MessageListener<Client> {
             
         } else if (message instanceof InitClient){
             InitState.addMessage(message);
+            
         } else if (message instanceof JoiningClient){
             InitState.addMessage(message);
+        
+        } else if (message instanceof UpdatePosDisk) {
+            Modeling.addMessage(message);
         }
         
         

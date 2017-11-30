@@ -10,6 +10,7 @@ import com.jme3.network.Network;
 import com.jme3.network.serializing.Serializer;
 import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Node;
+import com.jme3.system.AppSettings;
 import networking.Packet.*;
 
 /**
@@ -61,13 +62,17 @@ public class Main extends SimpleApplication {
     static final float TIME = 10f;
     //
     public static void main(String[] args) {
-        Main app = new Main();
+        Main application = new Main();
+        AppSettings newSettings = new AppSettings(true);
+        newSettings.setFrameRate(1000);
+        application.setSettings(newSettings);
+        Main app = application;
         app.start();
     }
     //test 2
 
     @Override
-    public void simpleInitApp() {        
+    public void simpleInitApp() {
         //Register packets
         Serializer.registerClass(DiskUpdate.class);
         Serializer.registerClass(ScoreUpdate.class);

@@ -128,6 +128,9 @@ public class NetRead implements Runnable, MessageListener<HostedConnection>, Con
         player2.setPosition(PlayerDisk.playerPos.get(random));
         NetWrite.initClient(player2.diskID, random, Filters.in(conn));
         
+        player1.startingPos = player1.pos;
+        player2.startingPos = player2.pos;
+        
         //inform other clients
         NetWrite.joiningClient(player1.diskID, PlayerDisk.playerPos.indexOf(player1.pos), Filters.notIn(conn));
         NetWrite.joiningClient(player2.diskID, PlayerDisk.playerPos.indexOf(player2.pos), Filters.notIn(conn));
@@ -149,6 +152,10 @@ public class NetRead implements Runnable, MessageListener<HostedConnection>, Con
             if(disk instanceof PlayerDisk){
                 PlayerDisk player = (PlayerDisk) disk;
                 if(player.conn.getId() == conn.getId()) {
+                    PlayerDisk.busyPos[(player.diskID - 16)] = false;
+                    Disk.disks.remove(player);
+                    Disk.diskMap.remove(player.diskID);
+                    PlayerDisk.playerDisks.remove(player);
                     NetWrite.disconnectClient(player.diskID, null);
                 }
             }

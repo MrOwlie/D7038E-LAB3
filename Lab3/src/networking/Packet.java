@@ -256,6 +256,22 @@ public class Packet {
             return this.diskID;
         }
     }
+    @Serializable
+    public static class UpdatePosDisk extends MyAbstractMessage {
+        int diskID;
+        
+        public UpdatePosDisk() {
+            
+        }
+        
+        public UpdatePosDisk(int diskID) {
+            this.diskID = diskID;
+        }
+        
+        public int getDiskID() {
+            return this.diskID;
+        }
+    }
 }
 
 

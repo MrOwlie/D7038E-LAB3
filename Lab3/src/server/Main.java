@@ -6,6 +6,7 @@
 package server;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.system.AppSettings;
 import com.jme3.system.JmeContext;
 
 /**
@@ -51,7 +52,11 @@ public class Main extends SimpleApplication{
     }
     
     public static void main(String[] args){
+        
         Main application = new Main();
+        AppSettings newSettings = new AppSettings(true);
+        newSettings.setFrameRate(100);
+        application.setSettings(newSettings);
         Main.app = application;
         application.start(JmeContext.Type.Headless);
     }

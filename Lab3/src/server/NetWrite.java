@@ -18,6 +18,7 @@ import networking.Packet.MyAbstractMessage;
 import networking.Packet.ScoreUpdate;
 import networking.Packet.TimeDiff;
 import networking.Packet.TimeSync;
+import networking.Packet.UpdatePosDisk;
 
 /**
  *
@@ -75,8 +76,12 @@ public class NetWrite implements Runnable {
         messageQueue.add(new MessageFilterPair(new TimeDiff(timeDiff), filter));
     }
     
-    public static void changeState(byte stateID){
+    public static void changeState(byte stateID) {
         messageQueue.add(new MessageFilterPair(new ChangeState(stateID), null));
+    }
+    
+    public static void updatePosDisk(int diskID) {
+        messageQueue.add(new MessageFilterPair(new UpdatePosDisk(diskID), null));
     }
     
     public static void addMessage(MyAbstractMessage message, Filter filter) {

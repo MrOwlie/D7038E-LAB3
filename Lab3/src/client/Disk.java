@@ -30,8 +30,7 @@ public abstract class Disk {
     public Geometry diskGeom;
     public Material diskMat;
     
-    public boolean justCollided;
-    public boolean hasCollided;
+    public boolean justUpdated;
     
     public float radius;
     
@@ -77,6 +76,10 @@ public abstract class Disk {
         //if(!Disk.disks.contains(this)){
         //    Disk.disks.add(this);
         //}
+        
+        if(justUpdated) {
+            tpf += Modeling.serverTimeDiff;
+        }
         
         pos.x = pos.x + v.x * tpf;
         pos.y = pos.y + v.y * tpf;

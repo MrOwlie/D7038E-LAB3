@@ -28,6 +28,7 @@ public class PlayerDisk extends Disk{
     public static ArrayList<PlayerDisk> playerDisks = new ArrayList();
     public static ArrayList<Vector2f> playerPos = new ArrayList();
     public static boolean[] busyPos = new boolean[8];
+    public Vector2f startingPos;
     
     public boolean[] keyPressed = new boolean[4];
     
