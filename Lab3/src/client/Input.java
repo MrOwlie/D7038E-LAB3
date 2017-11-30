@@ -7,6 +7,9 @@ package client;
 
 import com.jme3.network.Message;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import networking.Packet;
+import networking.Packet.InputPressed;
+import networking.Packet.InputReleased;
 
 /**
  *
@@ -35,15 +38,76 @@ public class Input implements Runnable {
     
     public void handleMessage(InputContainer inputContainer){
         if(inputContainer instanceof ActionInputContainer){
-            
+            ActionInputContainer input = (ActionInputContainer) inputContainer;
+            switch(input.name){
+                //p1
+                case "p1Up": 
+                    if(input.isPressed)NetWrite.addMessage(new InputPressed(localPlayers[0].diskID, (byte)0));
+                    else NetWrite.addMessage(new InputReleased(localPlayers[0].diskID, (byte)0));
+                    break;
+                case "p1Down":
+                    if(input.isPressed)NetWrite.addMessage(new InputPressed(localPlayers[0].diskID, (byte)2));
+                    else NetWrite.addMessage(new InputReleased(localPlayers[0].diskID, (byte)2));
+                    break;
+                case "p1Left":
+                    if(input.isPressed)NetWrite.addMessage(new InputPressed(localPlayers[0].diskID, (byte)1));
+                    else NetWrite.addMessage(new InputReleased(localPlayers[0].diskID, (byte)1));
+                    break;
+                case "p1Right":
+                    if(input.isPressed)NetWrite.addMessage(new InputPressed(localPlayers[0].diskID, (byte)3));
+                    else NetWrite.addMessage(new InputReleased(localPlayers[0].diskID, (byte)3));
+                    break;
+                //p2    
+                case "p2Up":
+                    if(input.isPressed)NetWrite.addMessage(new InputPressed(localPlayers[1].diskID, (byte)0));
+                    else NetWrite.addMessage(new InputReleased(localPlayers[1].diskID, (byte)0));
+                    break;
+                case "p2Down":
+                    if(input.isPressed)NetWrite.addMessage(new InputPressed(localPlayers[1].diskID, (byte)2));
+                    else NetWrite.addMessage(new InputReleased(localPlayers[1].diskID, (byte)2));
+                    break;
+                case "p2Left":
+                    if(input.isPressed)NetWrite.addMessage(new InputPressed(localPlayers[1].diskID, (byte)1));
+                    else NetWrite.addMessage(new InputReleased(localPlayers[1].diskID, (byte)1));
+                    break;
+                case "p2Right":
+                    if(input.isPressed)NetWrite.addMessage(new InputPressed(localPlayers[1].diskID, (byte)3));
+                    else NetWrite.addMessage(new InputReleased(localPlayers[1].diskID, (byte)3));
+                    break;
+                //Ready
+                case "Ready":
+                    break;
+            }
         }
+        
         else if (inputContainer instanceof AnalogInputContainer){
-            
+            AnalogInputContainer input = (AnalogInputContainer) inputContainer;
+            switch(input.name){
+                //p1
+                case "p1Up": localPlayers[0].moveNorth(input.tpf);
+                    break;
+                case "p1Down": localPlayers[0].moveSouth(input.tpf);
+                    break;
+                case "p1Left": localPlayers[0].moveWest(input.tpf);
+                    break;
+                case "p1Right": localPlayers[0].moveEast(input.tpf);
+                    break;
+                //p2    
+                case "p2Up": localPlayers[1].moveNorth(input.tpf);
+                    break;
+                case "p2Down": localPlayers[1].moveSouth(input.tpf);
+                    break;
+                case "p2Left": localPlayers[1].moveWest(input.tpf);
+                    break;
+                case "p2Right": localPlayers[1].moveEast(input.tpf);
+                    break;
+            }
         }
         
     }
     
-    public static void addPlayer(PlayerDisk player){
+    public static void addPlayer(Packet.InitClient initMessage){
+        PlayerDisk player = new PlayerDisk(Main.refAssetManager, initMessage.getDiskID());
         if(localPlayers[0] == null) localPlayers[0] = player;
         else if(localPlayers[1] == null) localPlayers[1] = player;
         else System.out.println("Error! /nTwo local players already exist");    

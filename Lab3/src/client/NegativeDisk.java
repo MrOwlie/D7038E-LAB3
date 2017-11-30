@@ -15,9 +15,8 @@ import java.util.Random;
  */
 public class NegativeDisk extends Disk{
     
-    
-    public NegativeDisk(AssetManager assetManager, float x, float y) {
-        super(assetManager, ColorRGBA.Red, Main.NEGDISK_R);
+    public NegativeDisk(AssetManager assetManager, float x, float y, int id) {
+        super(assetManager, ColorRGBA.Red, Main.NEGDISK_R, id);
         this.pos.x = x;
         this.pos.y = y;
         this.diskNode.setLocalTranslation(x, y, 0f);

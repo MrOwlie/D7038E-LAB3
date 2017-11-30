@@ -5,7 +5,6 @@
  */
 package client;
 
-import static client.InitState.messageQueue;
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.asset.AssetManager;

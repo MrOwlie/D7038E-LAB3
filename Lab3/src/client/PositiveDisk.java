@@ -24,8 +24,8 @@ public class PositiveDisk extends Disk{
     int worth = 5;
     
     
-    public PositiveDisk(AssetManager assetManager, float x, float y) {
-        super(assetManager, ColorRGBA.Green, Main.POSDISK_R);
+    public PositiveDisk(AssetManager assetManager, float x, float y, int id) {
+        super(assetManager, ColorRGBA.Green, Main.POSDISK_R, id);
         this.pos.x = x;
         this.pos.y = y;
         

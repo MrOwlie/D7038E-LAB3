@@ -114,10 +114,6 @@ public class Modeling implements Runnable {
             } finally {
                 this.gameTimeLock.unlock();
             }
-        } else if (message instanceof InitClient){
-            InitClient initClientMessage = (InitClient)message;
-            PlayerDisk player = new PlayerDisk(Main.refAssetManager, initClientMessage.getDiskID());
-            Input.addPlayer(player);
         }
         
     }

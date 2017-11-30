@@ -13,7 +13,6 @@ import networking.Packet.ChangeState;
 import networking.Packet.ClientReady;
 import networking.Packet.DiskUpdate;
 import networking.Packet.ScoreUpdate;
-import networking.Packet.StartGame;
 import networking.Packet.TimeDiff;
 import networking.Packet.TimeSync;
 
@@ -69,10 +68,6 @@ public class NetRead implements Runnable, MessageListener<Client> {
             
             TimeDiff packet = (TimeDiff) message;
             
-        } else if(message instanceof StartGame) {
-            
-            StartGame packet = (StartGame) message;
-            
         } else if(message instanceof ChangeState) {
             
             ChangeState packet = (ChangeState) message;
@@ -93,5 +88,4 @@ public class NetRead implements Runnable, MessageListener<Client> {
     public void messageReceived(Client source, Message m) {
         messageQueue.add(m);
     }
-    
-    }
+}
