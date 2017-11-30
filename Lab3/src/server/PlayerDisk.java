@@ -24,7 +24,7 @@ public class PlayerDisk extends Disk{
     
     public boolean ready = false;
     
-    public static ArrayList<PlayerDisk> playerDisks;
+    public static ArrayList<PlayerDisk> playerDisks = new ArrayList();
     
     public boolean[] keyPressed = new boolean[4];
     

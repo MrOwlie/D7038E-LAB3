@@ -30,7 +30,17 @@ public class GameServer {
     
     public GameServer(String gameName, int version, int port) {
         //Register packets
-        Serializer.registerClass(networking.Packet.TestPacket.class);
+        Serializer.registerClass(networking.Packet.DiskUpdate.class);
+        Serializer.registerClass(networking.Packet.ScoreUpdate.class);
+        Serializer.registerClass(networking.Packet.TimeSync.class);
+        Serializer.registerClass(networking.Packet.TimeDiff.class);
+        Serializer.registerClass(networking.Packet.ChangeState.class);
+        Serializer.registerClass(networking.Packet.ClientReady.class);
+        Serializer.registerClass(networking.Packet.InitClient.class);
+        Serializer.registerClass(networking.Packet.DisconnectClient.class);
+        Serializer.registerClass(networking.Packet.InputPressed.class);
+        Serializer.registerClass(networking.Packet.InputReleased.class);
+        
         
 
         //Start the server
