@@ -85,6 +85,8 @@ public class NetRead implements Runnable, MessageListener<HostedConnection>, Con
     public void connectionAdded(Server server, HostedConnection conn) {
         PlayerDisk player1 = new PlayerDisk(conn);
         PlayerDisk player2 = new PlayerDisk(conn);
+        player1.setPosition(PlayerDisk.playerPos.get(0));
+        player2.setPosition(PlayerDisk.playerPos.get(1));
         NetWrite.initClient(player1.diskID, 0, Filters.in(conn));
         NetWrite.initClient(player2.diskID, 1, Filters.in(conn));
         NetWrite.syncTime(Filters.in(conn));

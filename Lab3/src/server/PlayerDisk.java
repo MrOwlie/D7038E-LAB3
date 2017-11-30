@@ -6,6 +6,7 @@
 package server;
 
 
+import com.jme3.math.Vector2f;
 import com.jme3.network.HostedConnection;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
@@ -25,6 +26,7 @@ public class PlayerDisk extends Disk{
     public boolean ready = false;
     
     public static ArrayList<PlayerDisk> playerDisks = new ArrayList();
+    public static ArrayList<Vector2f> playerPos = new ArrayList();
     
     public boolean[] keyPressed = new boolean[4];
     
@@ -33,6 +35,18 @@ public class PlayerDisk extends Disk{
         super(Main.PLAYER_R);
         this.conn = conn;
         score = 0;
+        
+        if(playerPos.isEmpty()){
+            PlayerDisk.playerPos.add(new Vector2f(-Main.PLAYER_COORD, Main.PLAYER_COORD));
+            PlayerDisk.playerPos.add(new Vector2f(0, Main.PLAYER_COORD));
+            PlayerDisk.playerPos.add(new Vector2f(Main.PLAYER_COORD, Main.PLAYER_COORD));
+            PlayerDisk.playerPos.add(new Vector2f(-Main.PLAYER_COORD, 0));
+            PlayerDisk.playerPos.add(new Vector2f(0, 0));
+            PlayerDisk.playerPos.add(new Vector2f(Main.PLAYER_COORD, 0));
+            PlayerDisk.playerPos.add(new Vector2f(-Main.PLAYER_COORD, -Main.PLAYER_COORD));
+            PlayerDisk.playerPos.add(new Vector2f(0, -Main.PLAYER_COORD));
+        }
+        
         PlayerDisk.playerDisks.add(this);
         
     }
