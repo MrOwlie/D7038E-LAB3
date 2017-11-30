@@ -9,7 +9,9 @@ import com.jme3.asset.AssetManager;
 import com.jme3.font.BitmapFont;
 import com.jme3.font.BitmapText;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector2f;
 import com.jme3.renderer.queue.RenderQueue;
+import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -17,7 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author mrowlie
  */
 public class PlayerDisk extends Disk{
-    
+    static ArrayList<Vector2f> playerPos = new ArrayList();
     
     int score;
     
@@ -28,7 +30,7 @@ public class PlayerDisk extends Disk{
     public static ConcurrentHashMap<Integer, PlayerDisk> playerMap = new ConcurrentHashMap();
     
     @SuppressWarnings("LeakingThisInConstructor")
-    public PlayerDisk(AssetManager assetManager, int id) {
+    public PlayerDisk(AssetManager assetManager, int id, int posIndex) {
         super(assetManager, ColorRGBA.Blue, Main.PLAYER_R, id);
         score = 0;
         font = assetManager.loadFont("Interface/Fonts/Console.fnt");
@@ -41,6 +43,8 @@ public class PlayerDisk extends Disk{
         text.setLocalTranslation(- text.getHeight() / 2, text.getHeight() / 2, Main.FRAME_THICKNESS + 1f);
         
         PlayerDisk.playerMap.put(id, this);
+        
+        
         
     }
     

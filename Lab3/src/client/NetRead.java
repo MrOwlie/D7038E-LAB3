@@ -10,8 +10,8 @@ import com.jme3.network.Message;
 import com.jme3.network.MessageListener;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import networking.Packet.ChangeState;
-import networking.Packet.ClientReady;
 import networking.Packet.DiskUpdate;
+import networking.Packet.InitClient;
 import networking.Packet.ScoreUpdate;
 import networking.Packet.TimeDiff;
 import networking.Packet.TimeSync;
@@ -54,29 +54,46 @@ public class NetRead implements Runnable, MessageListener<Client> {
     
     private void handlePacket(Message message) {
         if(message instanceof DiskUpdate){
+            
             Modeling.addMessage(message);
             
         } else if(message instanceof ScoreUpdate) {
             
-            ScoreUpdate packet = (ScoreUpdate) message;
+            Modeling.addMessage(message); 
             
         } else if(message instanceof TimeSync) {
             
-            TimeSync packet = (TimeSync) message;
+            Modeling.addMessage(message);
             
         } else if(message instanceof TimeDiff) {
             
-            TimeDiff packet = (TimeDiff) message;
+            Modeling.addMessage(message);
             
         } else if(message instanceof ChangeState) {
+            ChangeState packet = (ChangeState)message;
+            switch(packet.getState()){
+                case 0:
+                    Main.gameState.setEnabled(false);
+                    Main.initState.setEnabled(true);
+                    Main.endState.setEnabled(false);
+                    break;
+                case 1:
+                    Main.gameState.setEnabled(true);
+                    Main.initState.setEnabled(false);
+                    Main.endState.setEnabled(false);
+                    break;
+                case 2:
+                    Main.gameState.setEnabled(false);
+                    Main.initState.setEnabled(false);
+                    Main.endState.setEnabled(true);
+                    break;
+            } 
             
-            ChangeState packet = (ChangeState) message;
-            
-        } else if(message instanceof ClientReady) {
-            
-            ClientReady packet = (ClientReady) message;
-            
-        }
+        } else if (message instanceof InitClient){
+            Input.addPlayer((InitClient)message);    
+        } 
+        
+        
     }
     
     private void destroy(){

@@ -10,6 +10,7 @@ import com.jme3.app.state.BaseAppState;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
+import com.jme3.math.Vector2f;
 
 /**
  *
@@ -60,7 +61,16 @@ public class InitState extends BaseAppState{
         NegativeDisk nd4 = new NegativeDisk(Main.refAssetManager, Main.POSNEG_MAX_COORD, Main.POSNEG_BETWEEN_COORD, ++id);
         NegativeDisk nd5 = new NegativeDisk(Main.refAssetManager, Main.POSNEG_MAX_COORD, - Main.POSNEG_BETWEEN_COORD, ++id);
         NegativeDisk nd6 = new NegativeDisk(Main.refAssetManager, Main.POSNEG_BETWEEN_COORD, - Main.POSNEG_MAX_COORD, ++id);
-        NegativeDisk nd7 = new NegativeDisk(Main.refAssetManager, - Main.POSNEG_BETWEEN_COORD, - Main.POSNEG_MAX_COORD, ++id);    
+        NegativeDisk nd7 = new NegativeDisk(Main.refAssetManager, - Main.POSNEG_BETWEEN_COORD, - Main.POSNEG_MAX_COORD, ++id);
+        
+        PlayerDisk.playerPos.add(new Vector2f(-Main.PLAYER_COORD, Main.PLAYER_COORD));
+        PlayerDisk.playerPos.add(new Vector2f(0, Main.PLAYER_COORD));
+        PlayerDisk.playerPos.add(new Vector2f(Main.PLAYER_COORD, Main.PLAYER_COORD));
+        PlayerDisk.playerPos.add(new Vector2f(-Main.PLAYER_COORD, 0));
+        PlayerDisk.playerPos.add(new Vector2f(0, 0));
+        PlayerDisk.playerPos.add(new Vector2f(Main.PLAYER_COORD, 0));
+        PlayerDisk.playerPos.add(new Vector2f(-Main.PLAYER_COORD, -Main.PLAYER_COORD));
+        PlayerDisk.playerPos.add(new Vector2f(0, -Main.PLAYER_COORD));
     }
     
     private final ActionListener actionListener = new ActionListener() {

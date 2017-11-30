@@ -9,10 +9,10 @@ import com.jme3.network.Message;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.locks.ReentrantLock;
 import networking.Packet.DiskUpdate;
-import networking.Packet.InitClient;
 import networking.Packet.ScoreUpdate;
 import networking.Packet.TimeSync;
 import networking.Packet.DisconnectClient;
+import networking.Packet.TimeDiff;
 
 /**
  *
@@ -119,6 +119,10 @@ public class Modeling implements Runnable {
         } else if(message instanceof DisconnectClient){
             DisconnectClient packet = (DisconnectClient)message;
             Disk.diskMap.remove(packet.getDiskID());
+            
+        } else if(message instanceof TimeDiff){
+            TimeDiff packet = (TimeDiff)message;
+            serverTimeDiff = packet.getDiff();
         }
         
     }

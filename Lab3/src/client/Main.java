@@ -3,12 +3,14 @@ package client;
 import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetManager;
 import com.jme3.input.InputManager;
+import com.jme3.math.Quaternion;
+import com.jme3.math.Vector3f;
 import com.jme3.network.Client;
 import com.jme3.network.Network;
 import com.jme3.network.serializing.Serializer;
 import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Node;
-import networking.Packet.TestPacket;
+import networking.Packet.*;
 
 /**
  * This is the Main Class of your Game. You should only do initialization here.
@@ -68,6 +70,16 @@ public class Main extends SimpleApplication {
     public void simpleInitApp() {        
         //Register packets
         Serializer.registerClass(TestPacket.class);
+        Serializer.registerClass(DiskUpdate.class);
+        Serializer.registerClass(ScoreUpdate.class);
+        Serializer.registerClass(TimeSync.class);
+        Serializer.registerClass(TimeDiff.class);
+        Serializer.registerClass(ClientReady.class);
+        Serializer.registerClass(ChangeState.class);
+        Serializer.registerClass(InitClient.class);
+        Serializer.registerClass(DisconnectClient.class);
+        Serializer.registerClass(InputPressed.class);
+        Serializer.registerClass(InputReleased.class);      
         //Set references
         refAssetManager = assetManager;
         refInputManager = inputManager;
@@ -83,7 +95,12 @@ public class Main extends SimpleApplication {
         
         gameState.setEnabled(false);
         initState.setEnabled(true);
-        endState.setEnabled(false);     
+        endState.setEnabled(false);
+        //Cam setup
+        cam.setLocation(new Vector3f(-84f, 0.0f, 720f));
+        cam.setRotation(new Quaternion(0.0f, 1.0f, 0.0f, 0.0f));
+        //Create frame
+        new Frame(assetManager);
         //Start client
         try{
             

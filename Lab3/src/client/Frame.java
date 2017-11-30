@@ -51,6 +51,7 @@ public class Frame {
         this.eWall.setLocalRotation(rotation);
         this.wWall.setLocalRotation(rotation);
         
+        Main.refRootNode.attachChild(frameNode);
         
         
         
