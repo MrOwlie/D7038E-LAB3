@@ -9,6 +9,7 @@ import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
+import com.jme3.input.controls.AnalogListener;
 import com.jme3.input.controls.KeyTrigger;
 
 /**
@@ -47,7 +48,8 @@ public class GameState extends BaseAppState {
         
         Main.refInputManager.addListener(actionListener, "p1Up", "p1Down", "p1Left", "p1Right",
                                                          "p2UP", "p2Down", "p2Left", "p2Right", "Debug");
-        
+        Main.refInputManager.addListener(analogListener, "p1Up", "p1Down", "p1Left", "p1Right",
+                                                         "p2UP", "p2Down", "p2Left", "p2Right");   
     }
 
     @Override
@@ -61,6 +63,11 @@ public class GameState extends BaseAppState {
             Input.addMessage(new ActionInputContainer(tpf, name, isPressed));
         }
     };
-
     
+    private final AnalogListener analogListener = new AnalogListener() {
+        @Override
+        public void onAnalog(String name, float howmuch, float tpf){
+            Input.addMessage(new AnalogInputContainer(tpf, name));
+        }
+    };   
 }

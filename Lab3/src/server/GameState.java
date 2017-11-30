@@ -43,9 +43,9 @@ public class GameState extends BaseAppState {
             else if(d.getClass() == NegativeDisk.class) {
                 NegativeDisk nd = (NegativeDisk) d;
                 nd.randomizeVelocity();
-            } else {
-                continue;
-            }
+            } //else {
+                //continue;
+            //}
             NetWrite.updateDisk(d.diskID, d.pos.x, d.pos.y, d.getVelocity().x, d.getVelocity().y);
         }
     }

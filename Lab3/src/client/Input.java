@@ -83,7 +83,8 @@ public class Input implements Runnable {
                     }
                     break;
                 case "Debug":
-                    System.out.println("Player 1 : "+localPlayers[0].pos+"\nPlayer 2  : "+localPlayers[1].pos);
+                    System.out.println("Player 1 : "+localPlayers[0].pos+"\nPlayer 2  : "+localPlayers[1].pos
+                    +"\nPlayer 1 velocity : "+localPlayers[0].getVelocity()+"\nPlayer 2 velocity : "+localPlayers[1].getVelocity());
                     break;
             }
         }
