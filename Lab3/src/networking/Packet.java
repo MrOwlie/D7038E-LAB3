@@ -21,23 +21,7 @@ public class Packet {
         }
     }
   
-    @Serializable
-    public static class TestPacket extends MyAbstractMessage {
-        
-        protected String message;
-        
-        public TestPacket(){
-            
-        }
-        
-        public TestPacket(String message) {
-            this.message = message;
-        }
-        
-        public String getMessage(){
-            return message;
-        }
-    }
+    
     @Serializable
     public static class DiskUpdate extends MyAbstractMessage {
         protected int diskID;

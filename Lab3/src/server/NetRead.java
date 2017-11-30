@@ -15,7 +15,6 @@ import java.util.Enumeration;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import networking.Packet.ClientReady;
 import networking.Packet.MyAbstractMessage;
-import networking.Packet.TestPacket;
 import networking.Packet.TimeDiff;
 import networking.Packet.TimeSync;
 

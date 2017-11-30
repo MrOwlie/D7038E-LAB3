@@ -69,7 +69,6 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleInitApp() {        
         //Register packets
-        Serializer.registerClass(TestPacket.class);
         Serializer.registerClass(DiskUpdate.class);
         Serializer.registerClass(ScoreUpdate.class);
         Serializer.registerClass(TimeSync.class);
@@ -128,11 +127,7 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleUpdate(float tpf) {
-        timeElapsed += tpf;
-        if(timeElapsed > TIME){
-            NetWrite.addMessage(new TestPacket("Hej server"));
-            timeElapsed = 0f;
-        }
+        
     }
 
     @Override
