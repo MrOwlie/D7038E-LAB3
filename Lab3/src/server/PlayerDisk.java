@@ -66,22 +66,22 @@ public class PlayerDisk extends Disk{
                 switch(i) {
                     case 0:
                         this.moveNorth(tpf);
-                        NetWrite.updatePlayerDisk(this);
+                        NetWrite.updateDisk(this.diskID, this.pos.x, this.pos.y, this.getVelocity().x, this.getVelocity().y);
                         break;
                         
                     case 1:
                         this.moveWest(tpf);
-                        NetWrite.updatePlayerDisk(this);
+                        NetWrite.updateDisk(this.diskID, this.pos.x, this.pos.y, this.getVelocity().x, this.getVelocity().y);
                         break;
                         
                     case 2:
                         this.moveSouth(tpf);
-                        NetWrite.updatePlayerDisk(this);
+                        NetWrite.updateDisk(this.diskID, this.pos.x, this.pos.y, this.getVelocity().x, this.getVelocity().y);
                         break;
                         
                     case 3:
                         this.moveEast(tpf);
-                        NetWrite.updatePlayerDisk(this);
+                        NetWrite.updateDisk(this.diskID, this.pos.x, this.pos.y, this.getVelocity().x, this.getVelocity().y);
                         break;
                         
                 }

@@ -21,11 +21,27 @@ public class EndState extends BaseAppState {
     
     @Override
     public void update(float tpf) {
-        
+        boolean playersReady = true;
+        for(PlayerDisk player: PlayerDisk.playerDisks) {
+            if(!player.ready) {
+                playersReady = false;
+                break;
+            }
+        }
+        if(PlayerDisk.playerDisks.isEmpty()) playersReady = false;
+        if(playersReady){
+            startGame();
+        }
     }
     @Override
     protected void initialize(Application app) {
         
+    }
+    
+    private void startGame() {
+        NetWrite.changeState((byte) 1);
+        Modeling.stateManager.getState(GameState.class).setEnabled(true);
+        Modeling.stateManager.getState(EndState.class).setEnabled(false);
     }
 
     @Override
@@ -34,7 +50,9 @@ public class EndState extends BaseAppState {
 
     @Override
     protected void onEnable() {
-        
+        for(PlayerDisk player: PlayerDisk.playerDisks) {
+            player.ready = false;
+        }
     }
 
     @Override
