@@ -72,7 +72,6 @@ public class NetRead implements Runnable, MessageListener<Client> {
             
         } else if(message instanceof ChangeState) {
             ChangeState packet = (ChangeState)message;
-            System.out.println("State : "+packet.getState());
             switch(packet.getState()){
                 case 0:
                     Main.gameState.setEnabled(false);
