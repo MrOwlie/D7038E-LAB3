@@ -38,7 +38,7 @@ public class NetWrite implements Runnable {
     
     private void update(){
         while(!exit){
-            if(!messageQueue.isEmpty()){
+            while(!messageQueue.isEmpty()){
                 Message message = messageQueue.remove();
                 myClient.send(message);
             }

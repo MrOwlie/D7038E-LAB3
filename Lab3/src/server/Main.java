@@ -17,7 +17,7 @@ public class Main extends SimpleApplication{
     //Server constants
     public static final String NAME = "MultiDisk";
     public static final String DEFAULT_SERVER = "localhost";
-    public static final int PORT = 2000;
+    public static final int PORT = 6143;
     public static final int VERSION = 1;
     
     //Game constants
@@ -47,6 +47,12 @@ public class Main extends SimpleApplication{
     
     static float timeElapsed = 0;
     
+    static float tepeeff;
+
+    static float getTPF() {
+        return tepeeff;
+    }
+    
     public Main() {
          
     }
@@ -55,7 +61,7 @@ public class Main extends SimpleApplication{
         
         Main application = new Main();
         AppSettings newSettings = new AppSettings(true);
-        newSettings.setFrameRate(100);
+        newSettings.setFrameRate(1000);
         application.setSettings(newSettings);
         Main.app = application;
         application.start(JmeContext.Type.Headless);
@@ -72,6 +78,7 @@ public class Main extends SimpleApplication{
     @Override
     public void simpleUpdate(float tpf) {
         Main.timeElapsed += tpf;
+        Main.tepeeff = tpf;
     }
     
     @Override

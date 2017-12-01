@@ -45,7 +45,7 @@ public class NetRead implements Runnable, MessageListener<Client> {
     
     private void update(){
         while(!this.exit) {
-            if(!messageQueue.isEmpty()){
+            while(!messageQueue.isEmpty()){
                 Message message = messageQueue.remove();
                 this.handlePacket(message);
                 
