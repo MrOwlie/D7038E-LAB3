@@ -116,6 +116,7 @@ public class EndState extends BaseAppState {
                 
                 PlayerDisk pd = (PlayerDisk) d;
                 Vector2f newPos = playerPos.remove(rand.nextInt(playerPos.size()));
+                pd.startingPos = newPos;
                 pd.setPosition(newPos);
                 pd.setVelocity(0, 0);
             }

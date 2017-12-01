@@ -60,31 +60,27 @@ public class Input implements Runnable {
                     break;
                 //p2    
                 case "p2Up":
-                    if(input.isPressed)NetWrite.addMessage(new InputPressed(localPlayers[1].diskID, (byte)0));
-                    else NetWrite.addMessage(new InputReleased(localPlayers[1].diskID, (byte)0));
+                    if(input.isPressed && localPlayers[1] != null)NetWrite.addMessage(new InputPressed(localPlayers[1].diskID, (byte)0));
+                    else if(localPlayers[1] != null) NetWrite.addMessage(new InputReleased(localPlayers[1].diskID, (byte)0));
                     break;
                 case "p2Down":
-                    if(input.isPressed)NetWrite.addMessage(new InputPressed(localPlayers[1].diskID, (byte)2));
-                    else NetWrite.addMessage(new InputReleased(localPlayers[1].diskID, (byte)2));
+                    if(input.isPressed && localPlayers[1] != null)NetWrite.addMessage(new InputPressed(localPlayers[1].diskID, (byte)2));
+                    else if(localPlayers[1] != null) NetWrite.addMessage(new InputReleased(localPlayers[1].diskID, (byte)2));
                     break;
                 case "p2Left":
-                    if(input.isPressed)NetWrite.addMessage(new InputPressed(localPlayers[1].diskID, (byte)1));
-                    else NetWrite.addMessage(new InputReleased(localPlayers[1].diskID, (byte)1));
+                    if(input.isPressed && localPlayers[1] != null)NetWrite.addMessage(new InputPressed(localPlayers[1].diskID, (byte)1));
+                    else if(localPlayers[1] != null) NetWrite.addMessage(new InputReleased(localPlayers[1].diskID, (byte)1));
                     break;
                 case "p2Right":
-                    if(input.isPressed)NetWrite.addMessage(new InputPressed(localPlayers[1].diskID, (byte)3));
-                    else NetWrite.addMessage(new InputReleased(localPlayers[1].diskID, (byte)3));
+                    if(input.isPressed && localPlayers[1] != null)NetWrite.addMessage(new InputPressed(localPlayers[1].diskID, (byte)3));
+                    else if(localPlayers[1] != null) NetWrite.addMessage(new InputReleased(localPlayers[1].diskID, (byte)3));
                     break;
                 //Ready
                 case "Ready":
-                    if(input.isPressed && localPlayers[0] != null && localPlayers[1] != null){
+                    if(input.isPressed && localPlayers[0] != null){
                         NetWrite.addMessage(new ClientReady(localPlayers[0].diskID));
-                        NetWrite.addMessage(new ClientReady(localPlayers[1].diskID));
+                        if(localPlayers[1] != null)NetWrite.addMessage(new ClientReady(localPlayers[1].diskID));
                     }
-                    break;
-                case "Debug":
-                    System.out.println("Player 1 : "+localPlayers[0].pos+"\nPlayer 2  : "+localPlayers[1].pos
-                    +"\nPlayer 1 velocity : "+localPlayers[0].getVelocity()+"\nPlayer 2 velocity : "+localPlayers[1].getVelocity());
                     break;
             }
         }
@@ -102,13 +98,13 @@ public class Input implements Runnable {
                 case "p1Right": localPlayers[0].moveEast(input.tpf);
                     break;
                 //p2    
-                case "p2Up": localPlayers[1].moveNorth(input.tpf);
+                case "p2Up": if(localPlayers[1] != null)localPlayers[1].moveNorth(input.tpf);
                     break;
-                case "p2Down": localPlayers[1].moveSouth(input.tpf);
+                case "p2Down": if(localPlayers[1] != null)localPlayers[1].moveSouth(input.tpf);
                     break;
-                case "p2Left": localPlayers[1].moveWest(input.tpf);
+                case "p2Left": if(localPlayers[1] != null)localPlayers[1].moveWest(input.tpf);
                     break;
-                case "p2Right": localPlayers[1].moveEast(input.tpf);
+                case "p2Right": if(localPlayers[1] != null)localPlayers[1].moveEast(input.tpf);
                     break;
             }
         }

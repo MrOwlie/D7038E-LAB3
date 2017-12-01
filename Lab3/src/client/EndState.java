@@ -7,7 +7,9 @@ package client;
 
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
-import com.jme3.asset.AssetManager;
+import com.jme3.input.KeyInput;
+import com.jme3.input.controls.ActionListener;
+import com.jme3.input.controls.KeyTrigger;
 import com.jme3.math.Vector2f;
 import com.jme3.network.Message;
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ public class EndState extends BaseAppState {
         while(!messageQueue.isEmpty()){
             handleMessage(messageQueue.remove());
         }
+        
     }
     @Override
     protected void initialize(Application app) {
@@ -39,12 +42,16 @@ public class EndState extends BaseAppState {
 
     @Override
     protected void onEnable() {
+        Main.refInputManager.addMapping("Ready", new KeyTrigger(KeyInput.KEY_R));
+        Main.refInputManager.addListener(actionListener, "Ready");
         
     }
 
     @Override
     protected void onDisable() {
-        resetGame();
+        Main.refInputManager.deleteMapping("Ready");
+        Main.refInputManager.removeListener(actionListener);
+        //resetGame();
     }
     
     private void handleMessage(Message message){
@@ -101,5 +108,12 @@ public class EndState extends BaseAppState {
             }            
         }
     }
+    
+    private final ActionListener actionListener = new ActionListener(){
+        @Override
+        public void onAction(String name, boolean isPressed, float tpf) {
+            Input.addMessage(new ActionInputContainer(tpf,name,isPressed));
+        }    
+    };
     
 }
