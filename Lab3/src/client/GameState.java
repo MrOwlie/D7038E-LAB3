@@ -24,7 +24,7 @@ public class GameState extends BaseAppState {
     }
     @Override
     protected void initialize(Application app) {
-        
+        Main.model.initialize();
     }
 
     @Override

@@ -48,6 +48,7 @@ public class Main extends SimpleApplication {
     static AssetManager refAssetManager;
     static InputManager refInputManager;
     static Node refRootNode;
+    static Node refGuiNode;
     
     static GameState gameState;
     static InitState initState;
@@ -89,6 +90,7 @@ public class Main extends SimpleApplication {
         refAssetManager = assetManager;
         refInputManager = inputManager;
         refRootNode = rootNode;
+        refGuiNode = guiNode;
         //create and set states
         gameState = new GameState();
         initState =  new InitState();

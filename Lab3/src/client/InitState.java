@@ -7,6 +7,8 @@ package client;
 
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
+import com.jme3.font.BitmapFont;
+import com.jme3.font.BitmapText;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
@@ -21,6 +23,8 @@ import networking.Packet.JoiningClient;
  */
 public class InitState extends BaseAppState{
     private static ConcurrentLinkedQueue<Message> messageQueue = new ConcurrentLinkedQueue<Message>();
+    BitmapFont font;
+    BitmapText text;
     @Override
     public void update(float tpf){
         if(!messageQueue.isEmpty())handleMessage(messageQueue.remove());
@@ -29,6 +33,10 @@ public class InitState extends BaseAppState{
     @Override
     protected void initialize(Application game) {
         initDisks();
+        font = Main.refAssetManager.loadFont("Interface/Fonts/Console.fnt");
+        text = new BitmapText(font);
+        text.setText("Press 'R' to ready-up");
+        //set pos
     }
 
     @Override
@@ -39,12 +47,14 @@ public class InitState extends BaseAppState{
     protected void onEnable() {
         Main.refInputManager.addMapping("Ready", new KeyTrigger(KeyInput.KEY_R));
         Main.refInputManager.addListener(actionListener, "Ready");
+        Main.refGuiNode.attachChild(text);
     }
 
     @Override
     protected void onDisable() {
         Main.refInputManager.removeListener(actionListener);
         Main.refInputManager.deleteMapping("Ready");
+        Main.refGuiNode.detachChild(text);
     }
     
     
