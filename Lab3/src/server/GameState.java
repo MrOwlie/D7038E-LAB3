@@ -42,6 +42,7 @@ public class GameState extends BaseAppState {
 
     @Override
     protected void onEnable() {
+        roundTime = 0;
         for(Disk d : Disk.disks){
             if(d.getClass() == PositiveDisk.class) {
                 PositiveDisk pd = (PositiveDisk) d;
