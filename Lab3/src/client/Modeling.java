@@ -48,6 +48,11 @@ public class Modeling{
         third = new BitmapText(font);
         timer = new BitmapText(font);
         
+        timer.setLocalTranslation(500f,700f,0f);
+        first.setLocalTranslation(500f,600f,0f);
+        second.setLocalTranslation(500f,550f,0f);
+        third.setLocalTranslation(500f,500f,0f);
+        
         Main.refGuiNode.attachChild(first);
         Main.refGuiNode.attachChild(second);
         Main.refGuiNode.attachChild(third);
@@ -104,6 +109,7 @@ public class Modeling{
         } else if(message instanceof TimeDiff){
             TimeDiff packet = (TimeDiff)message;
             serverTimeDiff = packet.getDiff();
+            
         } else if(message instanceof UpdatePosDisk){
             UpdatePosDisk packet = (UpdatePosDisk)message;
             PositiveDisk disk = (PositiveDisk)Disk.diskMap.get(packet.getDiskID());
@@ -112,7 +118,11 @@ public class Modeling{
     }
     
     public void startTimer(){
-        gameTimeElapsed = serverTimeDiff;   
+        gameTimeElapsed = serverTimeDiff;
+        timer.setText("Time : "+gameTimeElapsed);
+        first.setText("");
+        second.setText("");
+        third.setText("");
     }
     
 

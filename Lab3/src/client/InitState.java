@@ -37,6 +37,7 @@ public class InitState extends BaseAppState{
         text = new BitmapText(font);
         text.setText("Press 'R' to ready-up");
         //set pos
+        text.setLocalTranslation(500f,400f,0f);
     }
 
     @Override
