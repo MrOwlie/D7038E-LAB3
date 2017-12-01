@@ -41,6 +41,7 @@ public class GameServer {
         Serializer.registerClass(networking.Packet.DisconnectClient.class);
         Serializer.registerClass(networking.Packet.InputPressed.class);
         Serializer.registerClass(networking.Packet.InputReleased.class);
+        Serializer.registerClass(networking.Packet.UpdatePosDisk.class);
         
         
 

@@ -42,7 +42,6 @@ public class GameState extends BaseAppState {
 
     @Override
     protected void onEnable() {
-        System.out.println("Enabled");
         for(Disk d : Disk.disks){
             if(d.getClass() == PositiveDisk.class) {
                 PositiveDisk pd = (PositiveDisk) d;
